@@ -22,6 +22,8 @@ w3tc-config
 plugins/*
 !plugins/wpforms/
 !plugins/wpforms/**
+!plugins/mavero-schema/
+!plugins/mavero-schema/**
 # !plugins/my-directory-plugin/
 
 # Ignore everything in the "themes" directory, except the themes you
@@ -103,15 +105,3 @@ speedycache-config/
 composer.phar
 
 .claude/regression-screenshots
-
-# plugins/wpforms is committed wholesale (excluded from Composer management via
-# extra.installer-exclude, tracked directly instead), and it ships its own
-# nested vendor/ (bundled Composer libs: symfony polyfills, action-scheduler)
-# plus an unrelated assets/pro/images/vendor/ (country-flag images) that just
-# happens to be named "vendor". The generic vendor/ rule above was silently
-# swallowing both — 189 files, including vendor/autoload.php itself, which
-# WPForms requires unconditionally. Re-include the whole subtree last so no
-# current or future generic pattern (vendor/, node_modules/, etc.) can do that
-# again.
-!plugins/wpforms/**
-!plugins/mavero-schema/**
