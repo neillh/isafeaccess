@@ -1,0 +1,391 @@
+/*
+ * query($breakpoint, $mode)
+ *
+ * Generates the query value according to breakpoints defined in pixels.
+ * Preferred usage is mobile-first:
+ * Common examples:
+ * @media (query($tablet)) {
+ *
+ * A mobile-only media query:
+ * @media (query($tablet, max) {
+ *
+ * This also supports undefined breakpoints like:
+ * @media (query(600px)) {
+ * compiles to: @media (screen and (min-width: 600px)) {
+ * or
+ * @media (query(600px, max)) {
+ * compiles to: @media (screen and (max-width: 599px)) {
+ */
+@function query($size, $mode: min) {
+
+	$query: "min-width: #{$size}";
+
+	@if "max" == $mode {
+
+		$query: "max-width: #{$size - 1}";
+	}
+
+	@return $query;
+}
+
+/*
+ * Container
+ *
+ * To be used for centering the content.
+ */
+@mixin container() {
+	--gap: var(--f-spacing--container-gap);
+	--width: calc(var(--layout--content-size) + 2 * var(--gap));
+	inline-size: var(--width);
+	max-inline-size: 100%;
+	padding-inline: var(--gap);
+	margin-inline: auto;
+
+	@include break-max-custom(1386px) {
+		margin-inline: var(--layout--wallpaper--gutter);
+		inline-size: auto;
+	}
+}
+
+@mixin container-large() {
+	--gap: var(--f-spacing--container-gap);
+	--width: calc(var(--layout--wide-size) + 2 * var(--gap));
+	inline-size: var(--width);
+	max-inline-size: 100%;
+	padding-inline: var(--gap);
+	margin-inline: auto;
+}
+
+/*
+ * Button hover timings.
+ * Single source of truth — referenced by button-swipe, %button-link-base
+ * (blocks/buttons) and the editor override in components/buttons-global.
+ */
+$button-swipe-duration: 700ms;
+$button-lift-duration: 350ms;
+
+/*
+ * Button swipe
+ *
+ * Hover treatment for the filled button styles: a skewed panel of $swipe-bg
+ * sweeps across the button while it lifts 2px.
+ *
+ * Button labels are bare text nodes (and, on .btn-call, a Twentig-injected
+ * <svg>), so there's no inner wrapper to raise above an overlay. Instead the
+ * panel is a ::before at z-index -1 inside a stacking context created by
+ * `isolation: isolate` — painting order there is background → negative-z-index
+ * pseudo → inline content, so it lands above the fill and below the label
+ * without any markup changes.
+ */
+@mixin button-swipe($swipe-bg) {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden; // Clips the skew to the pill radius.
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: -2px -25%; // Overshoot so the skewed edge clears both corners.
+		z-index: -1;
+		background-color: $swipe-bg;
+		transform: translateX(-110%) skewX(-18deg);
+		transition: transform $button-swipe-duration $ease-out-quint;
+		pointer-events: none;
+	}
+
+	&:hover,
+	&:focus-visible {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgb(9 32 50 / 22%);
+
+		&::before {
+			transform: translateX(0) skewX(-18deg);
+		}
+	}
+
+	&:active {
+		transform: translateY(0) scale(0.98);
+		box-shadow: none;
+	}
+
+	/*
+	 * elements/reset globally forces transition-duration to 0.01ms !important
+	 * under reduced motion, which would leave the panel snapping into place.
+	 * Drop it entirely and swap the background colour instead.
+	 */
+	@media (prefers-reduced-motion: reduce) {
+
+		&::before {
+			display: none;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background-color: $swipe-bg;
+			transform: none;
+			box-shadow: none;
+		}
+	}
+}
+
+/*
+ * Button swipe reset
+ *
+ * mavero/button and core/button links both carry `wp-element-button`, so the
+ * primary button's swipe reaches every button on the page. Flat, background-free
+ * styles have to opt back out of it.
+ */
+@mixin button-swipe-reset() {
+	isolation: auto;
+	overflow: visible;
+
+	&::before {
+		content: none;
+	}
+
+	&:hover,
+	&:focus-visible,
+	&:active {
+		transform: none;
+		box-shadow: none;
+	}
+}
+
+/*
+ * Icon masks (Font Awesome-equivalent glyphs used on the Elementor site).
+ */
+$icon-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M438.6 278.6a32 32 0 0 0 0-45.3l-160-160a32 32 0 0 0-45.3 45.3L338.8 224H32a32 32 0 0 0 0 64h306.7L233.4 393.4a32 32 0 0 0 45.3 45.3l160-160z'/%3E%3C/svg%3E");
+$icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M438.6 105.4a32 32 0 0 1 0 45.3l-256 256a32 32 0 0 1-45.3 0l-128-128a32 32 0 0 1 45.3-45.3L160 338.7l233.4-233.3a32 32 0 0 1 45.3 0z'/%3E%3C/svg%3E");
+$icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M278.6 233.4a32 32 0 0 1 0 45.3l-160 160a32 32 0 0 1-45.3-45.3L210.7 256 73.4 118.6a32 32 0 0 1 45.3-45.3l160 160z'/%3E%3C/svg%3E");
+$icon-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64c0 247.4 200.6 448 448 448 18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368c-70.4-33.3-127.4-90.3-160.7-160.7l49.3-40.3c13.7-11.2 18.4-30 11.6-46.3l-40-96z'/%3E%3C/svg%3E");
+$icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M256 80a32 32 0 0 0-64 0v144H48a32 32 0 0 0 0 64h144v144a32 32 0 0 0 64 0V288h144a32 32 0 0 0 0-64H256V80z'/%3E%3C/svg%3E");
+
+/*
+ * Fill button
+ *
+ * core/button default "Fill" style: solid brand green, 3px radius (the header
+ * "1300 147 233" CTA). Also applied to .wp-element-button (search, file, etc.).
+ */
+@mixin button-fill() {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6em;
+	box-sizing: border-box;
+	background-color: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--base);
+	border: 0;
+	border-radius: 3px;
+	padding: 12px 24px;
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 0.9375rem;
+	font-weight: 500;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: background-color 250ms ease, color 250ms ease;
+
+	&:hover,
+	&:focus-visible {
+		background-color: var(--wp--preset--color--accent-2);
+		color: var(--wp--preset--color--base);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--wp--preset--color--accent-2);
+		outline-offset: 2px;
+	}
+}
+
+/*
+ * Outline button
+ *
+ * core/button "Outline" style: square outline in currentColor with a
+ * trailing arrow (the Elementor "More Info" button). Kept here rather than in
+ * components/buttons-global so third-party markup we can't add a class to
+ * — e.g. the WPForms submit button — can match the primary CTA exactly.
+ */
+@mixin button-outline() {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6em;
+	box-sizing: border-box;
+	background-color: transparent;
+	color: currentColor;
+	border: 1px solid currentColor;
+	border-radius: var(--radius--button, 0);
+	padding: 12px 24px;
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 0.9375rem;
+	font-weight: 500;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+
+	// Trailing arrow. A mask (painted with currentColor) so it follows the
+	// button text on light, green and dark sections alike.
+	&::after {
+		content: "";
+		flex: none;
+		width: 0.85em;
+		height: 0.85em;
+		background-color: currentColor;
+		mask: $icon-arrow-right center / contain no-repeat;
+		transition: transform 250ms ease;
+	}
+
+	&:hover,
+	&:focus-visible {
+		background-color: color-mix(in srgb, currentColor 12%, transparent);
+
+		&::after {
+			transform: translateX(3px);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+}
+
+@mixin caption-style() {
+
+	@include t-body--xs;
+
+	color: var(--color--dark);
+	margin-block-start: rem(12);
+	text-align: start;
+}
+
+@mixin placeholder-style() {
+	border-radius: rem(2);
+
+	&::before {
+		content: "";
+		inset: 0;
+		position: absolute;
+		pointer-events: none;
+		background: currentcolor;
+		opacity: 0.1;
+	}
+}
+
+/*
+ * BREAKPOINTS MIXINS
+ *
+ * Syntactic sugar for breakpoints.
+ *
+ * Usage:
+ * @include break-desktop {
+ */
+
+$tablet: 768px; // Common tablets portrait.
+$desktop: 960px;
+$desktop-large: 1280px;
+
+@mixin break-max-custom($width) {
+
+	@media (query($width, "max")) {
+		@content;
+	}
+}
+
+@mixin break-tablet() {
+
+	@media (query($tablet)) {
+		@content;
+	}
+}
+
+@mixin break-desktop() {
+
+	@media (query($desktop)) {
+		@content;
+	}
+}
+
+@mixin break-desktop-large() {
+
+	@media (query($desktop-large)) {
+		@content;
+	}
+}
+
+
+@mixin break-mobile-only() {
+
+	@media (query($tablet, max)) {
+		@content;
+	}
+}
+
+@mixin break-mobile-tablet() {
+
+	@media (query($desktop, max)) {
+		@content;
+	}
+}
+
+/*
+ * Remove scrollbar.
+ * To be used on overflowing elements controlled with button controls or swipes.
+ */
+@mixin remove-scrollbar() {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/*
+ * EDITOR MIXINS
+ *
+ * Outputting styles specific to the editor, or non-editor.
+ *
+ * Usage:
+ * @include block-editor-only {
+ * @include non-block-editor {
+ */
+@mixin block-editor-only() {
+
+	@if ($is-block-editor) {
+		@content;
+	}
+
+}
+
+@mixin not-block-editor() {
+
+	@if (false == $is-block-editor) {
+		@content;
+	}
+
+}
+
+@mixin visually-hidden() {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+@mixin line-clamp($count) {
+	display: -webkit-box;
+	-webkit-line-clamp: $count;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+@mixin hr() {
+	width: 100%;
+	border: none;
+	color: var(--color--medium-light);
+	border-block-start: 1px solid;
+	margin-block: var(--f-spacing--s);
+}

@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "mavero/icon",
+	"version": "1.0.0",
+	"title": "Icon",
+	"category": "mavero-blocks",
+	"keywords": [
+		"icon"
+	],
+	"icon": "art",
+	"textdomain": "wp-theme-template",
+	"description": "Icon block.",
+	"attributes": {
+		"iconSize": {
+			"type": "number",
+			"default": "24"
+		},
+		"icon": {
+			"type": "string",
+			"default": "wordpress-alt"
+		},
+		"source": {
+			"type": "string",
+			"selector": "div.xwp-co-icon",
+			"source": "html"
+		},
+		"iconCollection": {
+			"type": "string",
+			"default": "core/dashicon"
+		}
+	},
+	"example": {},
+	"supports": {
+		"html": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"spacing": {
+			"padding": true
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"color": true,
+			"style": true,
+			"width": true
+		}
+	},
+	"editorScript": "file:editor.js",
+	"editorStyle": "file:editor.css"
+}

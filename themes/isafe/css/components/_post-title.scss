@@ -1,0 +1,11 @@
+// Migrated from theme.json styles.blocks.core/post-title
+
+.wp-block-post-title {
+	a:where(:not(.wp-element-button)) {
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

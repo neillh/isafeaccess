@@ -1,0 +1,496 @@
+/**
+ * Typography mixins
+ *
+ * This file is an unique place that controls the typography variables.
+ * Then the mixins or the classes will be used on the right location,
+ * to create the UI.
+ */
+
+/**
+ * Display
+ *
+ * @see https://www.figma.com/file/pGs84lEn8C3LAmqKw3U2DW/Express-Kit?node-id=4089-32361&t=Euj1bG5mv3gqOxsh-4
+ */
+
+@mixin t-display--5xl {
+	font-family: var(--font-family--display);
+	font-size: var(--display--5xl--font-size);
+	font-weight: var(--display--5xl--font-weight);
+	letter-spacing: var(--display--5xl--letter-spacing);
+	line-height: var(--display--5xl--line-height);
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-display--4xl {
+	font-family: var(--font-family--display);
+	font-size: var(--display--4xl--font-size);
+	font-weight: var(--display--4xl--font-weight);
+	letter-spacing: var(--display--4xl--letter-spacing);
+	line-height: var(--display--4xl--line-height);
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-display--3xl {
+	font-family: var(--font-family--display);
+	font-size: var(--display--3xl--font-size);
+	font-weight: var(--display--3xl--font-weight);
+	letter-spacing: var(--display--3xl--letter-spacing);
+	line-height: var(--display--3xl--line-height);
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-display--2xl {
+	font-family: var(--font-family--display);
+	font-size: var(--display--2xl--font-size);
+	font-weight: var(--display--2xl--font-weight);
+	letter-spacing: var(--display--2xl--letter-spacing);
+	line-height: var(--display--2xl--line-height);
+	margin-block-end: var(--f-spacing--l);
+	text-transform: uppercase;
+}
+
+@mixin t-display {
+	font-family: var(--font-family--display);
+}
+
+/**
+ * Headlines.
+ */
+
+@mixin t-headline--3xl {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--3xl--font-size);
+	letter-spacing: var(--headline--3xl--letter-spacing);
+	line-height: var(--headline--3xl--line-height);
+	font-weight: var(--headline--3xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-headline--2xl {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--2xl--font-size);
+	letter-spacing: var(--headline--2xl--letter-spacing);
+	line-height: var(--headline--2xl--line-height);
+	font-weight: var(--headline--2xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-headline--xl {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--xl--font-size);
+	letter-spacing: var(--headline--xl--letter-spacing);
+	line-height: var(--headline--xl--line-height);
+	font-weight: var(--headline--xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-headline--l {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--l--font-size);
+	letter-spacing: var(--headline--l--letter-spacing);
+	line-height: var(--headline--l--line-height);
+	font-weight: var(--headline--l--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-headline--m {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--m--font-size);
+	letter-spacing: var(--headline--m--letter-spacing);
+	line-height: var(--headline--m--line-height);
+	font-weight: var(--headline--m--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-headline--s {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--s--font-size);
+	line-height: var(--headline--s--line-height);
+	font-weight: var(--headline--s--font-weight);
+	letter-spacing: var(--headline--s--letter-spacing);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--s);
+}
+
+@mixin t-headline--xs {
+	font-family: var(--font-family--headline);
+	font-size: var(--headline--xs--font-size);
+	line-height: var(--headline--xs--line-height);
+	font-weight: var(--headline--xs--font-weight);
+	letter-spacing: var(--headline--xs--letter-spacing);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--s);
+}
+
+/**
+ * Headings
+ * Differ from "Headlines"
+ * in that they are used for editorial content.
+ */
+
+@mixin t-heading--3xl {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--3xl--font-size);
+	letter-spacing: var(--heading--3xl--letter-spacing);
+	line-height: var(--heading--3xl--line-height);
+	font-weight: var(--heading--3xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-heading--2xl {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--2xl--font-size);
+	letter-spacing: var(--heading--2xl--letter-spacing);
+	line-height: var(--heading--2xl--line-height);
+	font-weight: var(--heading--2xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--l);
+}
+
+@mixin t-heading--xl {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--xl--font-size);
+	letter-spacing: var(--heading--xl--letter-spacing);
+	line-height: var(--heading--xl--line-height);
+	font-weight: var(--heading--xl--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-heading--lg {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--l--font-size);
+	letter-spacing: var(--heading--l--letter-spacing);
+	line-height: var(--heading--l--line-height);
+	font-weight: var(--heading--l--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-heading--md {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--m--font-size);
+	letter-spacing: var(--heading--m--letter-spacing);
+	line-height: var(--heading--m--line-height);
+	font-weight: var(--heading--m--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--m);
+}
+
+@mixin t-heading--sm {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--s--font-size);
+	letter-spacing: var(--heading--s--letter-spacing);
+	line-height: var(--heading--s--line-height);
+	font-weight: var(--heading--s--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--s);
+}
+
+@mixin t-heading--xs {
+	font-family: var(--font-family--heading);
+	font-size: var(--heading--xs--font-size);
+	letter-spacing: var(--heading--xs--letter-spacing);
+	line-height: var(--heading--xs--line-height);
+	font-weight: var(--heading--xs--font-weight);
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--s);
+}
+
+/*
+ * Standard typography (including p) inherited.
+ * See --p--font-size & --p--line-height variables
+ */
+@mixin p {
+	margin-block-start: 0;
+	margin-block-end: var(--f-spacing--s);
+}
+
+
+/**
+ * Detail.
+ */
+
+@mixin t-detail-sans--lg {
+	font-family: var(--font-family--detail--sans);
+	font-size: var(--detail--sans--lg--font-size);
+	font-weight: var(--detail--sans--lg--font-weight);
+	letter-spacing: var(--detail--sans--lg--letter-spacing);
+	line-height: var(--detail--sans--lg--line-height);
+	text-transform: uppercase;
+}
+
+@mixin t-detail-sans--md {
+	font-family: var(--font-family--detail--sans);
+	font-size: var(--detail--sans--md--font-size);
+	font-weight: var(--detail--sans--md--font-weight);
+	letter-spacing: var(--detail--sans--md--letter-spacing);
+	line-height: var(--detail--sans--md--line-height);
+	text-transform: uppercase;
+}
+
+@mixin t-detail-sans--sm {
+	font-family: var(--font-family--detail--sans);
+	font-size: var(--detail--sans--sm--font-size);
+	font-weight: var(--detail--sans--sm--font-weight);
+	letter-spacing: var(--detail--sans--sm--letter-spacing);
+	line-height: var(--detail--sans--sm--line-height);
+	text-transform: uppercase;
+}
+
+@mixin t-detail-serif--lg {
+	font-family: var(--font-family--detail--serif);
+	font-size: var(--detail--serif--lg--font-size);
+	font-weight: var(--detail--serif--lg--font-weight);
+	letter-spacing: var(--detail--serif--lg--letter-spacing);
+	line-height: var(--detail--serif--lg--line-height);
+	text-transform: uppercase;
+}
+
+@mixin t-detail-serif--md {
+	font-family: var(--font-family--detail--serif);
+	font-size: var(--detail--serif--md--font-size);
+	font-weight: var(--detail--serif--md--font-weight);
+	letter-spacing: var(--detail--serif--md--letter-spacing);
+	line-height: var(--detail--serif--md--line-height);
+	text-transform: uppercase;
+}
+
+@mixin t-detail-serif--sm {
+	font-family: var(--font-family--detail--serif);
+	font-size: var(--detail--serif--sm--font-size);
+	font-weight: var(--detail--serif--sm--font-weight);
+	letter-spacing: var(--detail--serif--sm--letter-spacing);
+	line-height: var(--detail--serif--sm--line-height);
+	text-transform: uppercase;
+}
+
+/**
+ * Body Copy.
+ */
+
+@mixin t-body--lg {
+	font-family: var(--font-family--body);
+	font-size: var(--body--lg--font-size);
+	font-weight: var(--body--lg--font-weight);
+	letter-spacing: var(--body--lg--letter-spacing);
+	line-height: var(--body--lg--line-height);
+}
+
+@mixin t-body--lg--bold--italic {
+
+	@include t-body--lg;
+
+	--body--lg--font-weight: var(--font-weight--bold);
+	font-style: italic;
+}
+
+@mixin t-body--md {
+	font-family: var(--font-family--body);
+	font-size: var(--body--md--font-size);
+	font-weight: var(--body--md--font-weight);
+	letter-spacing: var(--body--md--letter-spacing);
+	line-height: var(--body--md--line-height);
+}
+
+@mixin t-body--md--bold--italic {
+	--body--md--font-weight: var(--font-weight--bold);
+	font-style: italic;
+
+	@include t-body--md;
+}
+
+@mixin t-body--sm {
+	font-family: var(--font-family--body);
+	font-size: var(--body--sm--font-size);
+	font-weight: var(--body--sm--font-weight);
+	letter-spacing: var(--body--sm--letter-spacing);
+	line-height: var(--body--sm--line-height);
+}
+
+@mixin t-body--sm--semibold {
+	--t-body--s--font-weight: var(--font-weight--semibold);
+
+	@include t-body--sm;
+}
+
+@mixin t-body--sm--italic {
+
+	@include t-body--sm;
+
+	font-style: italic;
+}
+
+@mixin t-body--xs {
+	font-family: var(--font-family--body);
+	font-size: var(--body--xs--font-size);
+	font-weight: var(--body--xs--font-weight);
+	letter-spacing: var(--body--xs--letter-spacing);
+	line-height: var(--body--xs--line-height);
+}
+
+@mixin t-body--xs--italic {
+
+	@include t-body--xs;
+
+	font-style: italic;
+}
+
+@mixin t-body--xs--bold--italic {
+	--body--xs--font-weight: var(--font-weight--bold);
+	font-style: italic;
+
+	@include t-body--xs;
+}
+
+/**
+ * Blockquote.
+ *
+ * This mixin is used inside /css/src/blocks/_core-quote.scss
+ */
+
+@mixin t-blockquote--lg {
+	font-family: var(--font-family--blockquote);
+	font-size: var(--blockquote--lg--font-size);
+	font-weight: var(--blockquote--lg--font-weight);
+	letter-spacing: var(--blockquote--lg--letter-spacing);
+	line-height: var(--blockquote--lg--line-height);
+	font-style: italic;
+}
+
+@mixin t-blockquote--md {
+	font-family: var(--font-family--blockquote);
+	font-size: var(--blockquote--md--font-size);
+	font-weight: var(--blockquote--md--font-weight);
+	letter-spacing: var(--blockquote--md--letter-spacing);
+	line-height: var(--blockquote--md--line-height);
+	font-style: italic;
+}
+
+/**
+ * Form Inputs.
+ *
+ * This mixin is used inside /css/src/elements/_form.scss
+ */
+
+@mixin t-input--md {
+	font-family: var(--font-family--ui);
+	font-size: var(--ui-input--md--font-size);
+	font-weight: var(--ui-input--md--font-weight);
+	letter-spacing: var(--input--md--letter-spacing);
+	line-height: var(--ui-input--md--line-height);
+}
+
+@mixin t-input--sm {
+	font-family: var(--font-family--ui);
+	font-size: var(--ui-input--sm--font-size);
+	font-weight: var(--ui-input--sm--font-weight);
+	letter-spacing: var(--input--sm--letter-spacing);
+	line-height: var(--ui-input--sm--line-height);
+}
+
+@mixin t-input--xs {
+	font-family: var(--font-family--ui);
+	font-size: var(--ui-input--xs--font-size);
+	font-weight: var(--ui-input--xs--font-weight);
+	letter-spacing: var(--input--xs--letter-spacing);
+	line-height: var(--ui-input--xs--line-height);
+}
+
+/**
+ * Form Label.
+ *
+ * This mixin is used inside /css/src/elements/_form.scss
+ */
+
+@mixin t-label--lg {
+	font-family: var(--font-family--primary);
+	font-size: var(--label--lg--font-size);
+	font-weight: var(--label--lg--font-weight);
+	letter-spacing: var(--label--lg--letter-spacing);
+	line-height: var(--label--lg--line-height);
+}
+
+@mixin t-label--md {
+	font-family: var(--font-family--primary);
+	font-size: var(--label--md--font-size);
+	font-weight: var(--label--md--font-weight);
+	letter-spacing: var(--label--md--letter-spacing);
+	line-height: var(--label--md--line-height);
+}
+
+@mixin t-label--sm {
+	font-family: var(--font-family--primary);
+	font-size: var(--label--sm--font-size);
+	font-weight: var(--label--sm--font-weight);
+	letter-spacing: var(--label--sm--letter-spacing);
+	line-height: var(--label--sm--line-height);
+}
+
+@mixin t-label--xs {
+	font-family: var(--font-family--primary);
+	font-size: var(--label--xs--font-size);
+	font-weight: var(--label--xs--font-weight);
+	letter-spacing: var(--label--xs--letter-spacing);
+	line-height: var(--label--xs--line-height);
+}
+
+/**
+ * Buttons.
+ *
+ * This mixin is used inside /css/src/elements/_buttons.scss
+ */
+
+@mixin t-button--lg {
+	font-size: var(--button--lg--font-size);
+	font-family: var(--font-family--button);
+	font-weight: var(--button--lg--font-weight);
+	letter-spacing: var(--button--lg--letter-spacing);
+	line-height: var(--button--lg--line-height);
+	text-transform: var(--button--text-transform);
+}
+
+@mixin t-button--md {
+	font-size: var(--button--md--font-size);
+	font-family: var(--font-family--button);
+	font-weight: var(--button--md--font-weight);
+	letter-spacing: var(--button--md--letter-spacing);
+	line-height: var(--button--md--line-height);
+	text-transform: var(--button--text-transform);
+}
+
+@mixin t-button--sm {
+	font-size: var(--button--sm--font-size);
+	font-family: var(--font-family--button);
+	font-weight: var(--button--sm--font-weight);
+	letter-spacing: var(--button--sm--letter-spacing);
+	line-height: var(--button--sm--line-height);
+	text-transform: var(--button--text-transform);
+}
+
+@mixin t-button--xs {
+	font-size: var(--button--xs--font-size);
+	font-family: var(--font-family--button);
+	font-weight: var(--button--xs--font-weight);
+	letter-spacing: var(--button--xs--letter-spacing);
+	line-height: var(--button--xs--line-height);
+	text-transform: var(--button--text-transform);
+}
+
+/**
+ * Code
+ */
+
+@mixin t-code {
+	font-family: var(--font-family--monospace);
+	font-size: var(--code--font-size);
+	font-weight: var(--code--font-weight);
+	letter-spacing: var(--code--letter-spacing);
+	line-height: var(--code--line-height);
+}

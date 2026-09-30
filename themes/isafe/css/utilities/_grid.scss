@@ -1,0 +1,27 @@
+/**
+ * Grid layout
+ *
+ * More about the common use cases of CSS Grid minmax():
+ * https://ishadeed.com/article/css-grid-minmax/
+ *
+ * Add the class grid to a HTML element
+ * <section class="grid">…</section>
+ * <section class="grid grid--articles">…</section>
+ *
+ * Override gap in specific contexts, or via helper classes.
+ * .grid--small {
+ *   --grid-gap: var(--spacing--small);
+ * }
+ * .grid--articles {
+ *   --grid-min: #{rem(350)};
+ * }
+ * .grid--one-third-two-thirds {
+ *   --template-columns: 33.33% 1fr;
+ * }
+ */
+
+.grid {
+	display: grid;
+	grid-gap: var(--grid-gap, var(--layout--block-gap));
+	grid-template-columns: var(--template-columns, repeat(auto-fit, minmax(var(--grid-min, #{rem(250)}), 1fr)));
+}

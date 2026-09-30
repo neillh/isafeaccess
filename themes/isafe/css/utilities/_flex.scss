@@ -1,0 +1,20 @@
+/*
+ * Flex layout
+ *
+ * Override gap in specific contexts, or via helper classes.
+ * .flex--small {
+ *   --gap: var(--spacing--small);
+ * }
+ */
+.flex {
+	display: flex;
+	gap: var(--flex-gap, var(--layout--block-gap));
+
+	&.is-vertical {
+		flex-direction: column;
+	}
+}
+
+.items-center {
+	align-items: center;
+}

@@ -1,0 +1,88 @@
+// stylelint-disable max-line-length
+// This variable is repeated across Button, Buttons, and Buttons editor styles.
+$blocks-block__margin: 0.5em;
+
+// Prefer the link selector instead of the regular button classname
+// to support the previous markup in addition to the new one.
+.wp-block-mavero-button__link {
+	display: flex;
+	gap: 8px;
+	cursor: pointer;
+	text-align: center;
+	word-break: break-word; // overflow-wrap doesn't work well if a link is wrapped in the div, so use word-break here.
+	box-sizing: border-box;
+
+	&.aligncenter {
+		text-align: center;
+	}
+
+	&.alignright {
+
+		/*rtl:ignore*/
+		text-align: end;
+	}
+}
+
+.wp-block-mavero-button[style*="text-decoration"] .wp-block-mavero-button__link {
+	text-decoration-line: inherit;
+}
+
+// Increased specificity needed to override margins.
+.wp-block-mavero-buttons > .wp-block-mavero-button {
+
+	&.has-custom-width {
+		max-width: none;
+
+		.wp-block-mavero-button__link {
+			width: 100%;
+		}
+	}
+
+	&.has-custom-font-size {
+
+		.wp-block-mavero-button__link {
+			font-size: inherit;
+		}
+	}
+
+	&.wp-block-mavero-button__width-25 {
+		width: calc(25% - (var(--wp--style--block-gap, #{$blocks-block__margin}) * 0.75));
+	}
+
+	&.wp-block-mavero-button__width-50 {
+		width: calc(50% - (var(--wp--style--block-gap, #{$blocks-block__margin}) * 0.5));
+	}
+
+	&.wp-block-mavero-button__width-75 {
+		width: calc(75% - (var(--wp--style--block-gap, #{$blocks-block__margin}) * 0.25));
+	}
+
+	&.wp-block-mavero-button__width-100 {
+		width: 100%;
+		flex-basis: 100%;
+	}
+}
+
+// For vertical buttons, gap is not factored into width calculations.
+.wp-block-mavero-buttons.is-vertical > .wp-block-mavero-button {
+
+	&.wp-block-mavero-button__width-25 {
+		width: 25%;
+	}
+
+	&.wp-block-mavero-button__width-50 {
+		width: 50%;
+	}
+
+	&.wp-block-mavero-button__width-75 {
+		width: 75%;
+	}
+}
+
+.wp-block-mavero-button__link.no-border-radius {
+	border-radius: 0 !important; // stylelint-disable-line declaration-no-important
+}
+
+.has-icon-position-before {
+	order: -1;
+}

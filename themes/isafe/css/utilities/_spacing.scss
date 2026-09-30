@@ -1,0 +1,22 @@
+/*
+ * Common spacing.
+ */
+
+/*
+ * SPACING INSET
+ * Padding for text insets and card components.
+ * Visualised in blocks divisible by 4.
+ */
+
+$spacing-inset--large: var(--spacing--lg);
+$spacing-inset--medium: var(--spacing--md);
+$spacing-inset--small: var(--spacing--sm);
+
+/*
+ * Squished INSET
+ * Padding for buttons, text insets, notifications and such.
+ * Visualised in blocks divisible by 4.
+ */
+
+$spacing-inset-squish--large: var(--spacing--md) var(--spacing--lg);
+$spacing-inset-squish--medium: var(--spacing--sm) var(--spacing--md);

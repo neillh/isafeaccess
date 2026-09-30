@@ -1,0 +1,24 @@
+// =============================================================================
+// Site Footer
+// Styles for the footer pattern (patterns/footer.php), rendered by parts/footer.html.
+// =============================================================================
+
+footer {
+	margin-block-start: 0;
+
+	// a:where(:not(.wp-element-button)) {
+	// 	text-decoration: none;
+	// }
+
+	// // Elementor used a rounded-square icon shape, not core's circles.
+	// .wp-block-social-links .wp-block-social-link {
+	// 	border-radius: 3px;
+	// }
+
+	// @media (width < 782px) {
+
+	// 	.site-footer__logo img {
+	// 		inline-size: 200px !important;
+	// 	}
+	// }
+}

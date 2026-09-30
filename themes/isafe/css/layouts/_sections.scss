@@ -1,0 +1,108 @@
+// =============================================================================
+// Reusable page sections (Mavero\Helpers\Block_Markup, patterns/section-*.php)
+// =============================================================================
+
+// Intro band — lead copy with a long divider underneath.
+.isafe-intro-band .wp-block-separator.is-style-hatched {
+	--hatch-width: 370px;
+}
+
+// Text + image split and logo CTA: green 18px subheadings, as on the
+// Elementor service pages, with breathing room before each new subheading.
+.isafe-split,
+.isafe-logo-cta {
+	h3 {
+		font-size: 1.125rem;
+		font-weight: 800;
+		line-height: 1.35;
+		color: var(--wp--preset--color--accent);
+	}
+
+	:where(p, ul, ol) + h3 {
+		margin-block-start: 2.25rem;
+	}
+}
+
+.isafe-split .wp-block-image {
+	margin-block-start: var(--wp--preset--spacing--20);
+
+	img {
+		display: block;
+		inline-size: 100%;
+		block-size: auto;
+	}
+}
+
+// Logo CTA — brand logo sits above its divider.
+.isafe-logo-cta .wp-block-image {
+	margin-block-end: var(--wp--preset--spacing--30);
+}
+
+// Hero "eyebrow" pill (e.g. "On site assessment within 24 hours").
+// Colours carried over from the Elementor button.
+.is-pill {
+	display: inline-block;
+	align-self: flex-start;
+	inline-size: auto !important;
+	margin-block-end: var(--wp--preset--spacing--20);
+	padding: 6px 14px;
+	border-radius: 3px;
+	background-color: #6ec1e4;
+	color: #f1f1f1;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+// Quotes inside section copy — italic with a rule, as on the Elementor pages.
+.isafe-split .wp-block-quote {
+	margin-inline: 0;
+	padding-inline-start: var(--wp--preset--spacing--30);
+	border-inline-start: 3px solid var(--wp--preset--color--border);
+	font-style: italic;
+}
+
+// Team member cards (About page): green uppercase names, small uppercase role,
+// green square LinkedIn icon above the bio.
+.isafe-team {
+	h3 {
+		margin-block-end: 0;
+		font-size: 1.125rem;
+		font-weight: 800;
+		color: var(--wp--preset--color--accent);
+		text-transform: uppercase;
+	}
+
+	.isafe-team-member__role {
+		margin-block-start: 0.25rem;
+		font-size: 0.8125rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.wp-block-social-links .wp-block-social-link {
+		border-radius: 0;
+		background-color: var(--wp--preset--color--accent);
+		color: var(--wp--preset--color--base);
+	}
+
+	.isafe-team-member > p:not([class]) {
+		font-size: 0.875rem;
+	}
+}
+
+// Links inside running copy are brand green, as on the Elementor site. On green
+// and dark sections they follow the section's text colour instead.
+:where(main) :where(p, li) a:where(:not(.wp-element-button)) {
+	color: var(--wp--preset--color--accent);
+}
+
+:where(.is-style-section-green, .is-style-section-dark, .wp-block-cover) :where(p, li) a:where(:not(.wp-element-button)) {
+	color: inherit;
+}

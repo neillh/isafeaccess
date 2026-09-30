@@ -1,0 +1,25 @@
+/**
+ * Stack layout
+ *
+ * More about the common usecases:
+ * https://every-layout.dev/layouts/stack/
+ *
+ * Override gap in specific contexts, or via helper classes.
+ * .stack--small {
+ *   --stack-gap: var(--spacing--small);
+ * }
+ */
+
+.stack {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.stack > * {
+	margin-block: 0;
+}
+
+.stack > * + * {
+	margin-block-start: var(--stack-gap, var(--layout--block-gap));
+}

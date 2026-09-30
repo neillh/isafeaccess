@@ -1,0 +1,54 @@
+// Migrated from theme.json styles.blocks.core/separator
+
+.wp-block-separator {
+	border-color: currentcolor;
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	color: var(--wp--preset--color--border);
+
+	&.is-style-wide:not(.alignfull) {
+		max-inline-size: var(--wp--style--global--wide-size) !important;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Style: Hatched — the iSafe "/////" divider that sits under section headings.
+// Same slash pattern as the Elementor divider (repeating SVG mask, 20px tall),
+// painted in currentColor so it follows the text colour of the section it's in.
+// Registered in Mavero\Components\Block_Styles.
+// -----------------------------------------------------------------------------
+
+.wp-block-separator.is-style-hatched {
+	--hatch-width: 180px;
+
+	inline-size: min(100%, var(--hatch-width));
+	max-inline-size: none;
+	block-size: 20px;
+	margin-inline: 0;
+	border: 0;
+	opacity: 1;
+	color: inherit;
+	background-color: currentcolor;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 20' preserveAspectRatio='none'%3E%3Cpath d='M10 0 0 20' stroke='black' stroke-width='1.2' fill='none'/%3E%3C/svg%3E") left center / 8px 20px repeat-x;
+
+	&.has-text-color {
+		background-color: currentcolor !important;
+	}
+
+	&.alignwide,
+	&.alignfull {
+		--hatch-width: 100%;
+	}
+
+	// Constrained layouts centre every child with `margin: auto !important`;
+	// pin the divider to the left edge of the content column instead.
+	.is-layout-constrained > &:not(.aligncenter) {
+		margin-inline-start: max(0px, (100% - var(--wp--style--global--content-size)) / 2) !important;
+		margin-inline-end: auto !important;
+	}
+
+	.has-text-align-center > &,
+	&.aligncenter {
+		margin-inline: auto;
+	}
+}

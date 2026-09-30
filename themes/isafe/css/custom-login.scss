@@ -1,0 +1,71 @@
+$is-block-editor: false !default;
+
+/**
+ * Tools that *must not* produce any CSS output.
+ */
+@import "tools/index";
+
+/**
+ * Elements
+ * Tiny, reusable components
+ */
+@import "elements/css-variables";
+@import "elements/reset";
+@import "elements/utility-classes";
+
+body.login {
+	#wp-submit {
+		background-color: var(--color--blue);
+		border: none;
+		border-radius: var(--radius--button, 4px);
+		color: var(--color--white);
+		text-transform: uppercase;
+
+		&:hover {
+			background-color: var(--color--black);
+		}
+	}
+}
+
+#login h1 a,
+.login h1 a {
+	background-image: asset("images/isafe-access-logo-colour.svg");
+	background-size: 200px;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 200px;
+	height: 60px;
+	padding-bottom: 10px;
+}
+
+.md-login-wrapper {
+	background: var(--color--off-white);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	height: 100vh;
+
+	@include break-mobile-only {
+		grid-template-columns: 1fr;
+	}
+}
+
+.login-hero {
+	/* TODO: replace the flat teal panel with IAP brand imagery when available. */
+	background: linear-gradient(180deg,rgb(237,247,255) 0%,rgb(168,216,255) 100%);
+
+	@include break-mobile-only {
+		display: none;
+	}
+}
+
+.login-form {
+	background: var(--color--white);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	#login {
+		margin: unset;
+	}
+}

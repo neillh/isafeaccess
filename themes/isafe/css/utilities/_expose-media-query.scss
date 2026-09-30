@@ -1,0 +1,18 @@
+// Expose the current CSS breakpoint value to DOM so that JS can read it.
+
+html::after {
+	display: none;
+	content: "mobile";
+
+	@include break-tablet {
+		content: "tablet";
+	}
+
+	@include break-desktop {
+		content: "desktop";
+	}
+
+	@include break-desktop-large {
+		content: "desktop-large";
+	}
+}

@@ -1,0 +1,151 @@
+// =============================================================================
+// Buttons
+// Style variations for mavero/button and core/button blocks.
+// Replaces The Plus Blocks (tpgb) button component.
+// =============================================================================
+
+// Design tokens (from theme.json):
+// --wp--preset--color--accent:   #69BF4A (iSafe green)
+// --wp--preset--color--accent-2: #3D7A28 (Dark green — hover)
+// --wp--preset--color--base:     #FFFFFF (White)
+// --wp--preset--color--contrast: #24272A (Dark grey)
+// Brand: buttons are Archivo 500, 15px. Fill (default) is the solid green CTA;
+// Outline is a square border with a trailing arrow
+// (css/components/_buttons-global.scss). Link is a flat text-style CTA.
+
+// -----------------------------------------------------------------------------
+// Shared button link base
+// mavero/button uses .wp-block-mavero-button__link
+// core/button  uses .wp-block-button__link
+// -----------------------------------------------------------------------------
+
+%button-link-base {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	box-sizing: border-box;
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 500;
+	line-height: 1.5;
+	text-decoration: none;
+	cursor: pointer;
+	// :active is owned by the button-swipe mixin on the styles that use it.
+	transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, transform $button-lift-duration $ease-out-cubic, box-shadow $button-lift-duration $ease-out-cubic;
+}
+
+// -----------------------------------------------------------------------------
+// Button sizes
+// Applied via .is-size-{xs|s|m|l} on the wrapper element.
+// Shared across mavero/button and core/button.
+// -----------------------------------------------------------------------------
+
+// Size map: name → (padding, font-size)
+$button-sizes: (
+	xs: (6px 12px, 0.75rem),
+	s:  (8px 16px, 0.875rem),
+	m:  (12px 24px, 1rem),
+	l:  (16px 32px, 1.125rem),
+);
+
+@each $size, $values in $button-sizes {
+	$padding: nth($values, 1);
+	$font-size: nth($values, 2);
+
+	.wp-block-mavero-button.is-size-#{$size} .wp-block-mavero-button__link,
+	.wp-block-button.is-size-#{$size} .wp-block-button__link {
+		padding: $padding;
+		font-size: $font-size;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Full-width on mobile (mavero/button)
+// -----------------------------------------------------------------------------
+
+@media (width < 768px) {
+	.wp-block-mavero-button.has-full-width-on-mobile {
+		width: 100%;
+
+		.wp-block-mavero-button__link {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Style variations mixin
+// Generates styles for both mavero/button and core/button selectors.
+// -----------------------------------------------------------------------------
+
+// Pass $swipe-bg to give a style the animated hover panel instead of a plain
+// background change. $hover-bg/$hover-color are then ignored.
+@mixin button-variation($bg, $color, $border, $radius, $hover-bg, $hover-color, $hover-border: null, $padding: 12px 24px, $swipe-bg: null) {
+	@extend %button-link-base;
+
+	background-color: $bg;
+	color: $color;
+	border: $border;
+	border-radius: $radius;
+	padding: $padding;
+
+	@if $swipe-bg {
+		@include button-swipe($swipe-bg);
+	} @else {
+
+		&:hover,
+		&:focus-visible {
+			background-color: $hover-bg;
+			color: $hover-color;
+
+			@if $hover-border {
+				border-color: $hover-border;
+			}
+		}
+	}
+}
+
+// Helper to target both block types for a style variation.
+@mixin both-button-types($style) {
+	.wp-block-mavero-button.is-style-#{$style} .wp-block-mavero-button__link,
+	.wp-block-button.is-style-#{$style} .wp-block-button__link {
+		@content;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Fill (default) and Outline are defined in css/components/_buttons-global.scss.
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Fill (default) — phone links get a leading handset, as on the Elementor
+// header CTA. :where() keeps specificity low so the header's mobile
+// icon-only rule (css/components/_site-header.scss) can resize it.
+// -----------------------------------------------------------------------------
+
+.wp-block-button:where(:not(.is-style-outline, .is-style-link)) .wp-block-button__link[href^="tel:"]::before {
+	content: "";
+	flex: none;
+	inline-size: 0.9em;
+	block-size: 0.9em;
+	background-color: currentColor;
+	mask: $icon-phone center / contain no-repeat;
+}
+
+// -----------------------------------------------------------------------------
+// Style: Link — No background or border, in any state (incl. hover)
+// Used for: lowest-emphasis actions, inline text-style CTAs
+// -----------------------------------------------------------------------------
+
+@include both-button-types("link") {
+	@include button-variation(
+		$bg: transparent,
+		$color: currentColor,
+		$border: none,
+		$radius: 0,
+		$hover-bg: transparent,
+		$hover-color: var(--wp--preset--color--accent-2),
+		$padding: 0
+	);
+}

@@ -1,0 +1,24 @@
+/**
+ * Note: Style added here will automatically
+ * be prefixed with `.editor-styles-wrapper`.
+ */
+$is-block-editor: true;
+
+/**
+ * Tools that *must not* produce any CSS output.
+ */
+@import "tools/index";
+
+/**
+ * Typography has increased specificity, importing it first decreases
+ * the chances of it overriding block-specific styles.
+ * We use :where() here because it has 0 specificity.
+ * Source: https://developer.mozilla.org/en-US/docs/Web/CSS/:where
+ */
+:where(.editor-styles-wrapper) {
+	//@import "elements/lists";
+	@import "elements/typography";
+}
+
+@import "style";
+@import "lazy";

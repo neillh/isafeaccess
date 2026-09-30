@@ -1,0 +1,2 @@
+# Ignore svg folder which is used to generate JSON icons.
+dashicon/svg

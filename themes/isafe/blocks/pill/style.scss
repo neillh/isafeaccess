@@ -1,0 +1,23 @@
+.wp-block-mavero-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	padding: 0.35em 1em;
+	border: 2px solid currentColor;
+	border-radius: 999px;
+	font-size: 0.875rem;
+	line-height: 1.4;
+	white-space: nowrap;
+
+	&__text {
+		display: inline;
+		text-wrap: auto;
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		flex-shrink: 0;
+		line-height: 0;
+	}
+}

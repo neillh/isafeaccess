@@ -1,0 +1,60 @@
+$color_1: inherit;
+$color_2: var(--color--accent);
+
+
+.schema-faq-section {
+	margin-bottom: 0;
+	border-bottom: 1px solid var(--color--neutral-600);
+}
+
+.schema-faq-question {
+	cursor: pointer;
+	padding: 15px 0;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: $color_1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+
+	&::after {
+		content: "▼";
+		color: $color_2;
+		font-size: 12px;
+		transition: transform 0.3s ease;
+	}
+}
+
+.schema-faq-question.active {
+	&::after {
+		transform: rotate(180deg);
+	}
+}
+
+.schema-faq-answer {
+	margin: 0;
+	padding: 0 0 15px 0;
+	font-size: 1em;
+	color: $color_1;
+
+	// The accordion collapse/expand is driven by frontend JS toggling
+	// `.active`. That JS doesn't run inside the block editor, so collapsing
+	// by default here would leave the answer permanently hidden (0 height)
+	// there, blocking authors from clicking into it to edit. Keep the
+	// collapsed state frontend-only; the editor always shows it expanded.
+	//
+	// max-height is animated to the answer's actual scrollHeight (set inline
+	// by _yoast-faqs.js) rather than a percentage here — percentages resolve
+	// to `none` against an auto-height parent and can't transition smoothly.
+	@include not-block-editor {
+		max-height: 0;
+		overflow: hidden;
+		padding: 0;
+		transition: max-height 0.3s ease, padding 0.3s ease;
+
+		&.active {
+			padding: 0 0 15px 0;
+		}
+	}
+}

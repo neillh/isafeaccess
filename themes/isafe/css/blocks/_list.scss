@@ -1,0 +1,185 @@
+// =============================================================================
+// List
+// Style variations for the core/list block.
+// Registered in Mavero\Components\Block_Styles.
+// =============================================================================
+
+// Design tokens (from theme.json):
+// --wp--preset--color--accent:   #69BF4A (iSafe green)
+// --wp--preset--font-family--body: Archivo
+
+// -----------------------------------------------------------------------------
+// Style: Numbered — large display numerals
+// Used for: process/step sequences, "how it works" lists.
+//
+// Uses the implicit `list-item` counter rather than a named counter, so the
+// style numbers <ul> and <ol> alike and still honours `start`/`reversed` on an
+// ordered list. `list-style: none` does not stop it incrementing — the item
+// keeps `display: list-item`.
+//
+// The numeral size is driven by `--list-number-size`, which editors can
+// override per block via the "Number size" control added in
+// js/modules/_list-number-size.js.
+// -----------------------------------------------------------------------------
+
+.wp-block-list.is-style-numbered {
+	--list-number-size: 2rem;
+
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+
+	// Direct children only, so a nested list keeps the plain bullets and
+	// indent from components/_list.scss.
+	> li {
+		position: relative;
+		margin-top: 1.5rem;
+		padding-left: calc(var(--list-number-size) * 2);
+		font-family: var(--wp--preset--font-family--body);
+
+		&::before {
+			content: counter(list-item, decimal-leading-zero);
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-family: var(--wp--preset--font-family--display);
+			font-size: var(--list-number-size);
+			font-weight: 500;
+			line-height: 1.1;
+			color: var(--wp--preset--color--accent);
+			font-variant-numeric: tabular-nums;
+		}
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Styles: Checklist / Checklist — Two Columns — green tick items
+// Used for: feature/benefit lists; the Elementor icon-list with its default
+// `fa-check` icon in the accent colour.
+//
+// Columns lays the items out in a grid rather than `column-count` so items
+// fill row-wise (1 2 / 3 4) — the reading order editors expect — instead of
+// column-wise, and so an odd item count doesn't leave a ragged column break
+// mid-item.
+//
+// The tick is an SVG mask rather than a background image or a `✓` glyph:
+// the mask is painted with `background-color`, so the tick takes its colour
+// from `--list-check-color` and can be recoloured per block, and it doesn't
+// depend on the body font shipping a tick at a usable weight. It stays green
+// on dark sections too, as the Elementor icon-list did.
+// -----------------------------------------------------------------------------
+
+.wp-block-list.is-style-checklist,
+.wp-block-list.is-style-columns {
+	--list-check-size: 0.9em;
+	--list-check-gap: 0.6rem;
+	--list-check-color: var(--wp--preset--color--accent);
+
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+
+	// Direct children only, so a nested list keeps its own markers below.
+	> li {
+		position: relative;
+		padding-left: calc(var(--list-check-size) + var(--list-check-gap));
+
+		// Centred against the item's first line rather than its whole box, so
+		// a wrapping item keeps the tick beside line one.
+		&::before {
+			content: "";
+			position: absolute;
+			top: calc((1lh - var(--list-check-size)) / 2);
+			left: 0;
+			width: var(--list-check-size);
+			height: var(--list-check-size);
+			background-color: var(--list-check-color);
+			mask: $icon-check center / contain no-repeat;
+		}
+	}
+
+	// `list-style` is inherited, so without this a nested list would render as
+	// unmarked text. Restore the UA markers rather than cascading ticks down.
+	ul,
+	ol {
+		list-style: revert;
+	}
+}
+
+.wp-block-list.is-style-checklist > li {
+	margin-top: 0.5rem;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+.wp-block-list.is-style-columns {
+	--list-columns: 2;
+	--list-columns-gap: 2rem;
+	--list-columns-row-gap: 0.75rem;
+
+	display: grid;
+	grid-template-columns: repeat(var(--list-columns), minmax(0, 1fr));
+	column-gap: var(--list-columns-gap);
+	row-gap: var(--list-columns-row-gap);
+
+	// Row gap handles the spacing, so drop the per-item margin that would
+	// otherwise double it up on every row after the first.
+	> li {
+		margin-top: 0;
+	}
+}
+
+@media (width < 768px) {
+
+	// Smaller default on mobile. An editor-set value is an inline style and so
+	// outranks this selector at every breakpoint, which is the intended behaviour.
+	.wp-block-list.is-style-numbered {
+		--list-number-size: 1.5rem;
+	}
+
+	// Two columns is too cramped at phone widths — stack back to one.
+	.wp-block-list.is-style-columns {
+		--list-columns: 1;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Style: Chevrons — the Elementor icon-list look (service cards).
+// Chevron is a mask painted in currentColor, so it follows the text colour of
+// light, green and dark sections without per-block colour settings.
+// -----------------------------------------------------------------------------
+
+.wp-block-list.is-style-chevrons {
+	--list-chevron-size: 0.6em;
+
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+
+	> li {
+		position: relative;
+		margin-top: 0.35rem;
+		padding-left: 1.4em;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: calc((1lh - var(--list-chevron-size)) / 2);
+			left: 0.2em;
+			width: var(--list-chevron-size);
+			height: var(--list-chevron-size);
+			background-color: currentColor;
+			mask: $icon-chevron-right center / contain no-repeat;
+		}
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"sizes": [
+		{
+			"label": "XSmall",
+			"value": "XSmall",
+			"className": "is-size-xs"
+		},
+		{
+			"label": "Small",
+			"value": "small",
+			"className": "is-size-s"
+		},
+		{
+			"label": "Medium",
+			"value": "medium",
+			"className": ""
+		},
+		{
+			"label": "Large",
+			"value": "large",
+			"className": "is-size-l"
+		}
+	],
+	"styles": [
+		{
+			"name": "link",
+			"label": "Link"
+		}
+	]
+}

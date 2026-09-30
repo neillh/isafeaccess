@@ -1,0 +1,117 @@
+# Ignore everything in the "wp-content" directory, except:
+# "mu-plugins", "plugins", "themes" directory
+index.php
+!mu-plugins/
+!plugins/
+!themes/
+uploads
+languages
+cache
+w3tc-config
+
+# WordPress runtime directories, created on the server during core/plugin
+# updates. Never deployed either - see .deployignore.
+/upgrade/
+/upgrade-temp-backup/
+
+# NOTE: .github/ must NOT be ignored - the deploy workflow lives there and has
+# to be committed for GitHub Actions to run it.
+
+# Ignore everything in the "plugins" directory, except for the plugins you
+# specify (see the commented-out examples for hints on how to do this.)
+plugins/*
+!plugins/wpforms/
+!plugins/wpforms/**
+# !plugins/my-directory-plugin/
+
+# Ignore everything in the "themes" directory, except the themes you
+# specify (see the commented-out example for a hint on how to do this.)
+themes/*
+!themes/isafe/
+!themes/isafe/**
+
+# Ignore node_modules and vendor directories.
+# plugins/vendor/ is Composer's vendor-dir and is rebuilt in CI, so it stays out
+# of git. Query Monitor is committed here rather than Composer-managed, so its
+# own vendor/ (just an autoloader) must be tracked or QM bails out on the server.
+node_modules/
+vendor/
+!mu-plugins/query-monitor/vendor/
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Ignore packaged files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore editor files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+.idea/
+*.swp
+*.swo
+
+# Ignore cache files
+*.sass-cache
+*.npm-cache
+
+# Ignore build files
+build/
+dist/
+wflogs/
+jetpack-waf/
+speedycache-config/
+
+.env
+
+# Codex local overrides and secrets.
+.codex/config.local.toml
+.codex/local.toml
+.codex/secrets.toml
+.codex/secrets/
+
+# Ignore composer files.
+# composer.lock MUST stay tracked: the deploy runs `composer install`, which
+# fails without it (and is non-reproducible if it falls back to resolving).
+composer.phar
+
+.claude/regression-screenshots
+
+# plugins/wpforms is committed wholesale (excluded from Composer management via
+# extra.installer-exclude, tracked directly instead), and it ships its own
+# nested vendor/ (bundled Composer libs: symfony polyfills, action-scheduler)
+# plus an unrelated assets/pro/images/vendor/ (country-flag images) that just
+# happens to be named "vendor". The generic vendor/ rule above was silently
+# swallowing both — 189 files, including vendor/autoload.php itself, which
+# WPForms requires unconditionally. Re-include the whole subtree last so no
+# current or future generic pattern (vendor/, node_modules/, etc.) can do that
+# again.
+!plugins/wpforms/**
+!plugins/mavero-schema/**

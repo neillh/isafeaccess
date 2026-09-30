@@ -1,0 +1,12 @@
+// =============================================================================
+// Global link styles
+// Migrated from theme.json styles.elements.link
+// =============================================================================
+
+a:where(:not(.wp-element-button)) {
+	color: currentColor;
+
+	&:hover {
+		text-decoration: none;
+	}
+}

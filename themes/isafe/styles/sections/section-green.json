@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Green section",
+	"slug": "section-green",
+	"blockTypes": [
+		"core/group",
+		"core/column"
+	],
+	"styles": {
+		"color": {
+			"background": "var:preset|color|accent",
+			"text": "var:preset|color|base"
+		},
+		"elements": {
+			"heading": {
+				"color": {
+					"text": "var:preset|color|base"
+				}
+			},
+			"link": {
+				"color": {
+					"text": "currentColor"
+				}
+			}
+		}
+	}
+}

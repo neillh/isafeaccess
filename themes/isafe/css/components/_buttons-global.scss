@@ -1,0 +1,46 @@
+// =============================================================================
+// Global button element styles
+//
+// core/button styles (core registers "Fill" as the default and "Outline"):
+//   Fill (default) → solid green CTA            (button-fill mixin)
+//   Outline        → border + trailing arrow    (button-outline mixin)
+//   Link           → text only                  (css/blocks/_buttons.scss)
+// =============================================================================
+
+$outline-buttons: ".wp-block-button.is-style-outline .wp-block-button__link, .wp-block-mavero-button.is-style-outline .wp-block-mavero-button__link";
+
+.wp-element-button,
+.wp-block-button__link {
+
+	@include button-fill;
+}
+
+#{$outline-buttons} {
+
+	@include button-outline;
+}
+
+// The block-editor iframe doesn't dequeue wp-block-library's default button
+// style (only the front end does, in class-block-styles.php), so its
+// `.wp-block-button__link { background-color: #32373c }` ties on specificity
+// with the rules above and wins on load order. Re-declare under
+// .editor-styles-wrapper to win the tie-break inside the editor.
+@include block-editor-only {
+
+	.editor-styles-wrapper .wp-element-button,
+	.editor-styles-wrapper .wp-block-button__link {
+
+		@include button-fill;
+	}
+
+	.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link,
+	.editor-styles-wrapper .wp-block-mavero-button.is-style-outline .wp-block-mavero-button__link {
+
+		@include button-outline;
+	}
+}
+
+// Buttons container gap
+.wp-block-buttons {
+	gap: 16px;
+}

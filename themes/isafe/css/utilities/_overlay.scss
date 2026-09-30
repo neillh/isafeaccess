@@ -1,0 +1,49 @@
+/*
+ * Default overlay backdrop & content
+ *
+ * See
+ * /js/README.md
+ * /js/src/modules/OverlayHelper.js
+ *
+ */
+
+.site-overlay {
+	visibility: hidden;
+	transition: $transition-fade;
+	position: fixed;
+	inset: 0;
+	background-color: color-mix(in srgb, var(--color--off-white) 40%, transparent);
+	backdrop-filter: blur(4px);
+	z-index: $z-index--overlay;
+}
+
+.site-overlay[data-overlay="true"] {
+	visibility: visible;
+
+	.mega-menu-is-open & {
+
+		@media (query($tablet, max)) {
+			inset-block-start: calc(var(--site-header--height) + var(--wp-admin--admin-bar--height, 0px));
+		}
+	}
+}
+
+/* Modals transition */
+[aria-modal="true"] {
+	transition: $transition-shadow, $transition-transform;
+}
+
+/*
+ * This class will be added when the overlay is visible
+ * Feel free to add a global animation
+ * or add an animation to the component (ex: .search-box)
+ */
+.is-overlaid {
+	z-index: $z-index--is-overlaid;
+
+	&.is-centered {
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

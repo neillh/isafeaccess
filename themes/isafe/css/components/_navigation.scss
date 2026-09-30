@@ -1,0 +1,54 @@
+// Migrated from theme.json styles.blocks.core/navigation
+// Matches the Elementor header: Archivo 14px/600, muted grey, green on hover
+// and for the current page.
+
+.wp-block-navigation {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+
+	// Core's `.wp-block-navigation .wp-block-navigation-item__content` sets
+	// `color: inherit` at (0,2,0) — match its specificity to win on order.
+	a:where(:not(.wp-element-button)),
+	.wp-block-navigation-item__content.wp-block-navigation-item__content {
+		color: var(--wp--preset--color--contrast-3);
+		text-decoration: none;
+		transition: color 200ms ease;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--wp--preset--color--accent);
+		}
+	}
+
+	.current-menu-item > a,
+	.current-menu-ancestor > a,
+	.wp-block-navigation-item__content[aria-current="page"],
+	a[aria-current="page"] {
+		color: var(--wp--preset--color--accent);
+	}
+
+	// Dropdowns
+	.wp-block-navigation__submenu-container {
+		min-inline-size: 240px !important;
+		padding-block: 8px;
+		border: 0 !important;
+		border-block-start: 3px solid var(--wp--preset--color--accent) !important;
+		background-color: var(--wp--preset--color--base);
+		box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+
+		.wp-block-navigation-item__content {
+			padding: 8px 18px;
+		}
+	}
+}
+
+// Nav on dark backgrounds (footer) — inherit the section text colour.
+.is-style-section-dark .wp-block-navigation a:where(:not(.wp-element-button)),
+.is-style-section-dark .wp-block-navigation .wp-block-navigation-item__content.wp-block-navigation-item__content {
+	color: inherit;
+
+	&:hover,
+	&:focus-visible {
+		color: var(--wp--preset--color--accent);
+	}
+}

@@ -1,0 +1,170 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "mavero/button",
+	"title": "Button With Icon",
+	"category": "mavero-blocks",
+	"parent": [
+		"mavero/buttons"
+	],
+	"description": "Prompt visitors to take action with a button-style link.",
+	"keywords": [
+		"link"
+	],
+	"textdomain": "mavero",
+	"attributes": {
+		"textAlign": {
+			"type": "string"
+		},
+		"url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href"
+		},
+		"title": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "title"
+		},
+		"text": {
+			"type": "string",
+			"source": "html",
+			"selector": "span.wp-block-mavero-button__link-text"
+		},
+		"linkTarget": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "target"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel"
+		},
+		"placeholder": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"gradient": {
+			"type": "string"
+		},
+		"width": {
+			"type": "number"
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "default",
+			"enum": [
+				"default",
+				"iconTextButton",
+				"icon"
+			]
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "after",
+			"enum": [
+				"before",
+				"after"
+			]
+		},
+		"icon": {
+			"type": "string",
+			"default": "wordpress-alt"
+		},
+		"iconSize": {
+			"type": "number",
+			"default": "20"
+		},
+		"size": {
+			"default": "m",
+			"type": "string"
+		},
+		"source": {
+			"type": "string",
+			"selector": "div.wp-block-mavero-button__link-icon",
+			"source": "html"
+		},
+		"iconCollection": {
+			"type": "string",
+			"default": "core/dashicon"
+		},
+		"ariaLabel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "aria-label"
+		},
+		"fullWidthOnMobile": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"align": false,
+		"alignWide": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"reusable": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": [
+				"horizontal",
+				"vertical"
+			],
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		},
+		"__experimentalSelector": ".wp-block-mavero-button .wp-block-mavero-button__link"
+	},
+	"styles": [
+		{
+			"name": "outline",
+			"label": "Outline"
+		},
+		{
+			"name": "link",
+			"label": "Link"
+		}
+	],
+	"editorStyle": "file:./editor.css",
+	"editorScript": "file:./editor.js",
+	"style": "file:./script.css"
+}

@@ -1,0 +1,44 @@
+// =============================================================================
+// Mega Menu — header integration
+// Panel-internal styling lives with the block, in blocks/mega-menu/style.scss.
+// What's here is the theme-level plumbing the panel needs from the header.
+// =============================================================================
+
+// The mega menu panel is absolutely positioned and needs a containing block to
+// resolve against. FSE renders a header-area template part as
+// `<header class="wp-block-template-part">`, which spans the full viewport and
+// sits directly above the content — exactly the anchor we want. Matching on the
+// class rather than the tag keeps this working if the part's `tagName` changes,
+// and `:has()` leaves every other template part untouched.
+.wp-block-template-part:has(.wp-block-mavero-mega-menu) {
+	position: relative;
+}
+
+// Core positions the navigation itself (`.wp-block-navigation { position: relative }`),
+// its responsive container and its dialog. The nearest positioned ancestor wins, so
+// without this the panel would size to the navigation rather than the header — and
+// `inset-inline: 0` would render it exactly as wide as the menu.
+//
+// Unsetting these is safe for core submenus: those anchor to
+// `.wp-block-navigation-item`, which keeps its own `position: relative`.
+//
+// All of it is scoped to navigations that actually contain a mega menu, and the
+// open mobile overlay is excluded — there the container is `position: fixed` and
+// must stay that way for the overlay to cover the screen.
+.wp-block-navigation:has(.wp-block-mavero-mega-menu) {
+	position: static;
+	overflow: visible;
+
+	.wp-block-navigation__container {
+		overflow: visible;
+	}
+
+	.wp-block-navigation__responsive-container:not(.is-menu-open) {
+		position: static;
+		overflow: visible;
+
+		.wp-block-navigation__responsive-dialog {
+			position: static;
+		}
+	}
+}

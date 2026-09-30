@@ -1,0 +1,69 @@
+/*
+ * Text alignment standard editor classes
+ * Used by Align toolbar component.
+ */
+.has-text-align-center {
+	text-align: center;
+}
+
+.has-text-align-left {
+	text-align: start;
+}
+
+.has-text-align-right {
+	text-align: end;
+}
+
+/*
+ * Flex alignment standard editor classes
+ * Used by Change Items Justification toolbar component.
+ * Compatible with the .flex utility.
+ */
+.is-content-justification-left {
+	justify-content: flex-start;
+
+	&.is-vertical {
+		align-items: flex-start;
+		justify-content: inherit;
+	}
+}
+
+.is-content-justification-center {
+	justify-content: center;
+
+	&.is-vertical {
+		align-items: center;
+		justify-content: inherit;
+	}
+}
+
+.is-content-justification-right {
+	justify-content: flex-end;
+
+	&.is-vertical {
+		align-items: flex-end;
+		justify-content: inherit;
+	}
+}
+
+.is-content-justification-space-between {
+	justify-content: space-between;
+}
+
+/*
+ * Vertical Alignment standard editor classes
+ * Used by Change Vertical Alignment toolbar component
+ * Compatible with the .grid utility.
+ */
+
+.are-vertically-aligned-top {
+	align-items: self-start;
+}
+
+.are-vertically-aligned-center {
+	align-items: center;
+}
+
+.are-vertically-aligned-bottom {
+	align-items: self-end;
+}

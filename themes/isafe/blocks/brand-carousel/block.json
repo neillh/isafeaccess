@@ -1,0 +1,56 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"version": "1.0.0",
+	"name": "mavero/brand-carousel",
+	"title": "Brand Carousel",
+	"category": "mavero-blocks",
+	"icon": "store",
+	"description": "Displays brand logos in a scrollable carousel.",
+	"keywords": ["brand", "carousel", "logos", "slider"],
+	"textdomain": "mavero",
+	"supports": {
+		"customClassName": true,
+		"html": false,
+		"align": ["wide", "full"],
+		"color": {
+			"text": false,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"background": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": false
+			}
+		}
+	},
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": ""
+		},
+		"title": {
+			"type": "string",
+			"default": "Our Brands"
+		},
+		"selectionMode": {
+			"type": "string",
+			"default": "all"
+		},
+		"selectedBrands": {
+			"type": "array",
+			"items": { "type": "integer" },
+			"default": []
+		}
+	},
+	"editorScript": "file:./editor.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./script.css",
+	"editorStyle": "file:./editor.css",
+	"render": "file:./template.php"
+}

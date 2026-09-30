@@ -1,0 +1,165 @@
+// =============================================================================
+// Group / Slider
+// Style variation for the core/group block.
+// Registered in Mavero\Components\Block_Styles.
+//
+// Structure expected: a Group (usually with the Row layout) whose direct
+// children are Group blocks — each direct child becomes one slide.
+// Slide count is intentionally fixed, not editor-configurable: 1 per view on
+// mobile, 3 per view from the tablet breakpoint up. Gap is fixed too, so the
+// layout doesn't have to fight the Row block's own (inline-styled) gap.
+//
+// Arrow controls, and the wrapper they're positioned against, are injected on
+// the frontend by js/modules/_group-slider.js.
+// =============================================================================
+
+// Viewport width from which the gutter beside a wide-aligned slider (1280px
+// wideSize) can fit a hanging 2.75rem arrow at -3.5rem: 1280 + 2 × 56 = 1392.
+$slider-arrows-outside: 1400px;
+
+// Non-scrolling wrapper the arrows are positioned against. The arrows can't
+// live inside the track itself: as absolutely-positioned children of an
+// `overflow-x: auto` element they scroll away with the slides.
+.wp-block-group__slider-wrap {
+	position: relative;
+
+	// Until the viewport is wide enough, the page gutter (the 20px root
+	// padding) is too narrow to hold the arrows outside the track — hanging
+	// them there pushes the next arrow past the viewport edge and the whole
+	// page scrolls sideways. Reserve room for them here instead: the track
+	// shrinks and the arrows sit in this padding, still clear of the cards.
+	padding-inline: 2.75rem;
+
+	@include break-tablet {
+		padding-inline: 3.5rem;
+	}
+
+	@media (query($slider-arrows-outside)) {
+		padding-inline: 0;
+	}
+}
+
+.wp-block-group.is-style-slider {
+	--slider-gap: 1rem;
+	--slider-per-view: 1;
+	--slider-max-per-view: 3; // Read by _group-slider.js to size the loop buffer.
+
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: var(--slider-gap);
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	@include remove-scrollbar;
+
+	@include break-tablet {
+		--slider-gap: 1.5rem;
+		--slider-per-view: 3;
+	}
+
+	// Every direct child is a slide, regardless of its block type.
+	> * {
+		flex: 0 0 calc((100% - (var(--slider-per-view) - 1) * var(--slider-gap)) / var(--slider-per-view));
+		scroll-snap-align: start;
+		min-width: 0;
+	}
+}
+
+// Arrow buttons, injected into .wp-block-group__slider-wrap (never into the
+// track itself) by js/modules/_group-slider.js. The carousel loops
+// continuously, so the buttons are never disabled.
+.wp-block-group__slider-arrow {
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border: none;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent, #69bf4a);
+	color: var(--wp--preset--color--base, #fff);
+	cursor: pointer;
+	transform: translateY(-50%);
+	transition: background-color 0.2s ease;
+
+	&:hover {
+		background: var(--wp--preset--color--accent-2, #3d7a28);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--wp--preset--color--accent, #69bf4a);
+		outline-offset: 2px;
+	}
+
+	svg {
+		width: 1.25rem;
+		height: 1.25rem;
+		fill: currentColor;
+	}
+
+	// Sit in the wrapper's reserved padding.
+	&--prev {
+		left: 0;
+	}
+
+	&--next {
+		right: 0;
+	}
+
+	@include break-tablet {
+		width: 2.75rem;
+		height: 2.75rem;
+	}
+
+	// Wide screens: the page gutter can hold the buttons fully outside the
+	// track.
+	@media (query($slider-arrows-outside)) {
+
+		&--prev {
+			left: -3.5rem;
+		}
+
+		&--next {
+			right: -3.5rem;
+		}
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Variant: Logo slider — add the "is-logo-slider" class alongside the Slider
+// style. Client logos, 2 / 3 / 5 per view (mobile / tablet / desktop), as on
+// the Elementor image carousel.
+// -----------------------------------------------------------------------------
+
+.wp-block-group.is-style-slider.is-logo-slider {
+	--slider-per-view: 2;
+	--slider-max-per-view: 5;
+
+	@include break-tablet {
+		--slider-per-view: 3;
+	}
+
+	@include break-desktop {
+		--slider-per-view: 5;
+	}
+
+	// Logos render at their intrinsic size (never upscaled or stretched),
+	// shrinking only when a slide is narrower than the image.
+	> .wp-block-image {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0;
+
+		img {
+			display: block;
+			inline-size: auto;
+			max-inline-size: 100%;
+			block-size: auto;
+		}
+	}
+}

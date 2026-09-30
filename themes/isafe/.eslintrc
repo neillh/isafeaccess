@@ -1,0 +1,52 @@
+{
+  "extends": ["airbnb", "plugin:prettier/recommended", "eslint-config-prettier"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "globals": {
+    "expect": true,
+    "sinon": true,
+    "Promise": true
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "strict": 0,
+    "import/first": 0,
+    "import/newline-after-import": 0,
+    "generator-star-spacing": 0,
+    "no-confusing-arrow": 0,
+    "no-trailing-spaces": 0,
+    "no-extra-boolean-cast": 0,
+    "no-unused-expressions": 0,
+    "no-unused-vars": 0,
+    "no-empty": 0,
+    "no-param-ssign": 0,
+    "no-plusplus": 0,
+    "no-return-assign": 0,
+    "padded-blocks": 0,
+    "quote-props": 0,
+    "quotes": 0,
+    "default-param-last":0,
+    "comma-dangle": ["error", "never"],
+    "global-require": 0,
+    "max-len": ["error", {
+      "code": 150,
+      "ignoreComments": true,
+      "ignoreStrings": true
+    }],
+    "prefer-destructuring": 0
+  }
+}

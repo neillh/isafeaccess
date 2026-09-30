@@ -1,0 +1,27 @@
+.wp-block-mavero-pill {
+	&__text {
+		min-width: 2em;
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+
+		.block-list-appender {
+			display: inline-flex;
+			margin: 0;
+
+			.block-editor-button-block-appender {
+				padding: 0;
+				min-width: 24px;
+				min-height: 24px;
+				width: 24px;
+				height: 24px;
+			}
+		}
+	}
+
+	.wp-block-xwp-co-icon {
+		display: inline-flex;
+	}
+}

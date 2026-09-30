@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Dark section",
+	"slug": "section-dark",
+	"blockTypes": [
+		"core/group",
+		"core/column"
+	],
+	"styles": {
+		"color": {
+			"background": "var:preset|color|contrast",
+			"text": "var:preset|color|text-on-dark"
+		},
+		"elements": {
+			"heading": {
+				"color": {
+					"text": "var:preset|color|text-on-dark"
+				}
+			},
+			"link": {
+				"color": {
+					"text": "currentColor"
+				}
+			}
+		}
+	}
+}

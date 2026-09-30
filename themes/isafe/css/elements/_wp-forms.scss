@@ -1,0 +1,88 @@
+// =============================================================================
+// WPForms
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Submit / page buttons
+// Outline button like the theme's default core/button, but coloured from the
+// form block's own settings (WPForms exposes them as --wpforms-button-* CSS
+// vars), so the white-on-green "Have a question?" form keeps its white outline.
+// WPForms' own rules are `div.wpforms-container-full button[type=submit]`
+// (0,2,2), so we qualify with `.wpforms-form` to win on specificity.
+// -----------------------------------------------------------------------------
+
+div.wpforms-container-full .wpforms-form {
+
+	button[type="submit"],
+	input[type="submit"],
+	.wpforms-page-button {
+
+		@include button-outline;
+
+		inline-size: auto;
+		block-size: auto;
+		border-color: var(--wpforms-button-border-color, currentColor);
+		background-color: var(--wpforms-button-background-color, transparent);
+		color: var(--wpforms-button-text-color, currentColor);
+		font-family: inherit;
+		cursor: pointer;
+
+		// WPForms uses ::after for its focus ring; the arrow isn't needed here.
+		&::after {
+			content: none;
+		}
+
+		// Tint over whatever the fill is (transparent on green, green on white).
+		&:hover,
+		&:active {
+			background-color: var(--wpforms-button-background-color, transparent);
+			background-image: linear-gradient(rgb(0 0 0 / 12%), rgb(0 0 0 / 12%));
+			color: var(--wpforms-button-text-color, currentColor);
+		}
+
+		&:focus {
+			outline: 2px solid currentColor;
+			outline-offset: 2px;
+		}
+	}
+}
+
+.newsletter-form {
+	form {
+		margin-bottom: 11px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		gap: 20px;
+
+		.wpforms-field {
+			padding: 0;
+		}
+	}
+
+	.wpforms-field-container {
+		max-width: 300px;
+		width: 100%;
+		margin-right: 20px;
+	}
+
+	.email-address {
+		width: 180%;
+		input {
+			max-width: 320px;
+			width: 200%;
+		}
+	}
+	div.wpforms-container-full {
+
+
+		button[type=submit] {
+			margin-right: 0;
+		}
+	}
+
+
+	.wpforms-submit-container {
+		margin-top: 0 !important;
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 3,
+	"version": "1.0.0",
+	"name": "mavero/mega-menu",
+	"title": "Mega Menu",
+	"category": "mavero-blocks",
+	"icon": "menu-alt",
+	"description": "A navigation item that opens a full-width dropdown panel. Add any blocks you like to the panel.",
+	"keywords": [ "menu", "navigation", "mega", "dropdown", "submenu" ],
+	"textdomain": "mavero",
+	"parent": [ "core/navigation" ],
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"customClassName": true,
+		"interactivity": true
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"panelWidth": {
+			"type": "string",
+			"default": "full"
+		},
+		"url": {
+			"type": "string"
+		},
+		"opensInNewTab": {
+			"type": "boolean",
+			"default": false
+		},
+		"rel": {
+			"type": "string"
+		},
+		"kind": {
+			"type": "string"
+		},
+		"id": {
+			"type": "number"
+		},
+		"type": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./editor.js",
+	"viewScriptModule": "file:./view.module.js",
+	"style": "file:./script.css",
+	"editorStyle": "file:./editor.css",
+	"render": "file:./template.php"
+}

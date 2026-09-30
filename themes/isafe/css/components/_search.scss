@@ -1,0 +1,23 @@
+// Migrated from theme.json styles.blocks.core/search
+
+.wp-block-search {
+	font-size: var(--wp--preset--font-size--medium);
+	line-height: 1.6;
+
+	.wp-block-search__input {
+		border-radius: 3.125rem;
+		padding-left: 1.5625rem;
+		padding-right: 1.5625rem;
+		border-color: var(--wp--preset--color--accent-6);
+	}
+
+	.wp-element-button,
+	.wp-block-search__button {
+		border-radius: 3.125rem;
+		margin-left: 1.125rem;
+
+		&:hover {
+			border-color: transparent;
+		}
+	}
+}

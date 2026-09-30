@@ -1,0 +1,20 @@
+@include break-mobile-tablet {
+
+	.hide-mobile {
+		// Using !important here as it's a utility class.
+		display: none !important; // stylelint-disable-line declaration-no-important
+	}
+}
+
+@include break-desktop {
+
+	.hide-desktop {
+		// Using !important here as it's a utility class.
+		display: none !important; // stylelint-disable-line declaration-no-important
+	}
+}
+
+.hide {
+	// Using !important here as it's a utility class.
+	display: none !important; // stylelint-disable-line declaration-no-important
+}

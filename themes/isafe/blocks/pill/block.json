@@ -1,0 +1,64 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"version": "1.0.0",
+	"name": "mavero/pill",
+	"title": "Pill",
+	"category": "mavero-blocks",
+	"icon": "tag",
+	"description": "A pill-shaped element with text, optional icon, and customizable styling.",
+	"keywords": ["pill", "badge", "tag", "label"],
+	"textdomain": "mavero",
+	"supports": {
+		"customClassName": true,
+		"html": false,
+		"anchor": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": false,
+				"style": false,
+				"width": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": false
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		}
+	},
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"editorScript": "file:./editor.js",
+	"style": "file:./script.css",
+	"editorStyle": "file:./editor.css",
+	"render": "file:./template.php"
+}

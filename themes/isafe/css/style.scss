@@ -1,0 +1,100 @@
+$is-block-editor: false !default;
+
+/**
+ * Tools that *must not* produce any CSS output.
+ */
+@import "tools/index";
+
+/**
+ * Elements
+ * Tiny, reusable components
+ */
+@import "elements/body";
+@import "elements/css-variables";
+@import "elements/typography";
+@import "elements/strong";
+@import "elements/reset";
+@import "elements/utility-classes";
+@import "elements/faqs";
+@import "elements/forms";
+@import "elements/wp-forms";
+@import "elements/webfonts";
+
+@include not-block-editor {
+
+	/**
+	* Elements that could interact with the block editor.
+	*/
+	//@import "elements/lists";
+}
+
+/**
+ * Utility
+ * Single class, single job.
+ */
+@import "utilities/alignment";
+@import "utilities/block-container";
+@import "utilities/container";
+@import "utilities/expose-media-query";
+@import "utilities/flex";
+@import "utilities/grid";
+@import "utilities/hide";
+@import "utilities/screen-reader";
+@import "utilities/spacing";
+@import "utilities/stack";
+
+/**
+ * Components — global element & block styles
+ * Migrated from theme.json styles section.
+ */
+@import "components/buttons-global";
+@import "components/links";
+@import "components/captions";
+@import "components/columns";
+@import "components/list";
+@import "components/navigation";
+@import "components/post-date";
+@import "components/post-navigation-link";
+@import "components/post-terms";
+@import "components/post-title";
+@import "components/query-pagination";
+@import "components/search";
+@import "components/separator";
+@import "components/site-tagline";
+@import "components/site-title";
+@import "components/site-footer";
+@import "components/term-description";
+
+@include not-block-editor {
+
+	/**
+	* Components — frontend only
+	*/
+	// @import "components/menu";
+	@import "components/site-header";
+	@import "blocks/mega-menu";
+	// @import "components/site-footer";
+}
+
+/**
+ * Blocks.
+ */
+@import "blocks/buttons";
+@import "blocks/list";
+@import "blocks/group-slider";
+@import "blocks/accordion";
+
+/**
+ * Layouts — page/section glue for the theme's patterns.
+ */
+@import "layouts/home";
+@import "layouts/sections";
+
+
+@include not-block-editor {
+	/**
+	* Layouts
+	*/
+	//@import "layouts/home";
+@import "layouts/sections";
+}

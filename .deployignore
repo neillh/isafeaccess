@@ -1,0 +1,60 @@
+# rsync exclude list for the GitHub Actions deploy (.github/workflows/deploy.yml).
+#
+# Pattern rules (rsync, not gitignore):
+#   - a leading "/" anchors the pattern to the transfer root (this directory)
+#   - a pattern without a leading "/" matches at any depth
+#   - a trailing "/" matches directories only
+#
+# NOTE: the deploy never passes --delete, so excluding something here only stops
+# it being *uploaded*. Files already on the server are never removed by a deploy.
+
+# --- VCS & CI: never on the server ---
+/.git/
+/.github/
+.gitignore
+.gitattributes
+/.deployignore
+/.editorconfig
+/.claude/
+/.codex/
+
+# --- Server-owned, not version controlled: never touch ---
+/uploads/
+/languages/
+/cache/
+/upgrade/
+/upgrade-temp-backup/
+/w3tc-config/
+
+# --- Node & build tooling ---
+node_modules/
+/themes/sfa/package.json
+/themes/sfa/package-lock.json
+/themes/sfa/webpack.config.js
+
+# --- Every dotfile at the theme root in one rule
+#     (.nvmrc .eslintrc .eslintrc.json .eslintignore .prettierrc .prettierrc.json
+#      .prettierignore .stylelintrc.json .stylelintignore .browserslistrc
+#      .sass-lint.yml .gitignore .DS_Store ...) ---
+/themes/sfa/.*
+
+# --- Composer manifests: the server never runs composer ---
+/composer.json
+/composer.lock
+/composer.phar
+
+# --- Dev artefacts ---
+*.log
+*.sql
+*.sqlite
+*.zip
+.env
+.phpunit.result.cache
+
+# --- OS / editor junk ---
+.DS_Store
+._*
+Thumbs.db
+.idea/
+*.swp
+*.swo

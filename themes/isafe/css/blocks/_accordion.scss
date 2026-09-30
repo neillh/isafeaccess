@@ -1,0 +1,65 @@
+// =============================================================================
+// Accordion
+// core/accordion restyled to match the Elementor nested accordion on the home
+// page ("Why choose iSafe Access"): compact rows, a green "+" on the left that
+// turns into a "×" when open, no underline on hover.
+// =============================================================================
+
+.wp-block-accordion {
+	--accordion-icon-color: var(--wp--preset--color--accent);
+
+	// Compact rows, as on the Elementor accordion — no flow-layout block gap.
+	> .wp-block-accordion-item {
+		margin-block: 0;
+	}
+}
+
+.wp-block-accordion-heading {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--wp--preset--color--contrast);
+}
+
+.wp-block-accordion-heading__toggle {
+	gap: 0.75rem;
+	padding-block: 0.35rem;
+
+	&:hover .wp-block-accordion-heading__toggle-title {
+		text-decoration: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--accordion-icon-color);
+		outline-offset: 2px;
+	}
+}
+
+.wp-block-accordion-heading__toggle-icon {
+	flex: none;
+	inline-size: 0.9em;
+	block-size: 0.9em;
+	overflow: hidden;
+	color: transparent; // Hide core's text "+" (not font-size: 0 — that would zero the em sizing); the mask draws a heavier one.
+	background-color: var(--accordion-icon-color);
+	mask: $icon-plus center / contain no-repeat;
+	transition: transform 200ms ease;
+
+	[aria-expanded="true"] > & {
+		transform: rotate(45deg);
+	}
+}
+
+.wp-block-accordion-panel {
+	padding-inline-start: calc(0.9em + 0.75rem); // Line up with the title text.
+
+	// Collapsed panels keep a box (hidden="until-found"), so only pad open ones.
+	.is-open > & {
+		padding-block-end: 0.75rem;
+	}
+
+	> :first-child {
+		margin-block-start: 0;
+	}
+}

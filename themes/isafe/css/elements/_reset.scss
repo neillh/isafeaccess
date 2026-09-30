@@ -1,0 +1,134 @@
+/**
+ * Reset styles.
+ *
+ * Minimal reset of style.
+ * Some good practice are already in the inline CSS of each Gutenberg blocks.
+ *
+ * More about reset files:
+ * https://piccalil.li/blog/a-modern-css-reset/
+ * https://www.joshwcomeau.com/css/custom-css-reset/
+ * https://github.com/twbs/bootstrap/blob/main/scss/_reboot.scss
+ */
+
+/**
+ * Use box-sizing for every element.
+ */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/**
+ * Site scroll padding in relation to admin bar.
+ * Always visible scrollbar to lower CLS https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter
+ */
+html {
+	scroll-padding-top: calc(var(--wp-admin--admin-bar--height, 0px) + var(--header-sticky--height, 0));
+	scrollbar-gutter: stable;
+	margin: 0;
+
+	&:focus-within {
+		scroll-behavior: smooth;
+	}
+
+	@include break-desktop {
+		// Default scrollbar width (based on Desktop Chrome).
+		// This value will be updated
+		// when expose-scroll-bar-width.js initializes.
+		--scrollbar--width: 0;
+
+		// Prevent CLS on Safari when overlay modal is enabled.
+		// See expose-scroll-bar-width.js for scrollbar value.
+		max-width: calc(100vw - var(--scrollbar--width));
+	}
+}
+
+@media (query(600px, max)) {
+
+	#wpadminbar {
+		position: fixed;
+	}
+}
+
+/**
+ * Set core body defaults.
+ */
+body {
+	min-block-size: 100vh;
+	text-rendering: optimizeSpeed;
+	/* stylelint-disable-line value-keyword-case */
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	margin: 0;
+
+	// Block gap — migrated from theme.json styles.spacing
+	// Root padding is handled by theme.json styles.spacing.padding + useRootPaddingAwareAlignments
+	--wp--style--block-gap: 1.2rem;
+}
+
+/**
+ * Make images easier to work with.
+ */
+img:not([hidden]),
+picture:not([hidden]) {
+	// max-inline-size: 100%;
+	// block-size: auto;
+	// display: block;
+}
+
+/**
+ * Remove built-in form typography styles.
+ */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+figure {
+	margin-inline: 0;
+	margin-block-start: 0;
+}
+
+/**
+ * Remove all animations, transitions for people that prefer not to see them.
+ * This is a global setting,
+ * but it would be better to use it on a per-element basis.
+ * https://web.dev/prefers-reduced-motion/#remove-motion-on-the-web
+ *
+ * These animations/@keyframes must be loaded from lazy.scss.
+ * Comment the lines below if an approach on per-element basis is used.
+ */
+@media (prefers-reduced-motion: reduce) {
+
+	// stylelint-disable declaration-no-important
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+
+	// stylelint-enable declaration-no-important
+
+	html:focus-within {
+		scroll-behavior: auto;
+	}
+}
+
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * Break words to fit paragraphs in container.
+ */
+p {
+	word-wrap: break-word;
+}

@@ -1,0 +1,16 @@
+.cf-pro-message.cf-pro-tracker.notice.notice-info {
+	display: none !important;
+}
+
+// WooCommerce order status colours
+.order-status.status-completed,
+mark.order-status.status-completed {
+	background-color: #e5e5e5 !important;
+	color: #333 !important;
+}
+
+.order-status.status-delivered,
+mark.order-status.status-delivered {
+	background-color: #c8d7e1 !important;
+	color: #333 !important;
+}

@@ -1,0 +1,224 @@
+@use "sass:map";
+
+/*
+ * iSafe Access brand tokens.
+ *
+ * theme.json's preset palette is the source of truth for brand colours; the
+ * brand entries below alias those presets so SCSS and the editor never drift.
+ * Values audited from the Elementor kit ("iSafe Green" #69BF4A, "iSafe Dk Grey"
+ * #24272A, "iSafe Lt Grey" #F1F1F1) and Astra's global palette (#444 body text).
+ *
+ * Mapping:
+ *   #69BF4A brand green → "brand-green" / token "accent" / theme.json accent
+ *   #3D7A28 dark green  → "brand-green-dark" / token "accent-hover" / theme.json accent-2
+ *                         (AA-compliant for green text on white / light grey)
+ *   #24272A dark grey   → "brand-dark" / token "accent-darker" / theme.json contrast
+ *   #444444 body text   → theme.json contrast-2
+ *   #F1F1F1 light grey  → "brand-light" / theme.json base-2
+ */
+
+$colors: (
+	"black": #000,
+	"ink": #24272a,
+	"neutral-100": #24272a,
+	"neutral-200": #444,
+	"neutral-300": #7a7a7a,
+	"neutral-400": #989ea9,
+	"neutral-500": #ddd,
+	"neutral-600": #e5e7eb,
+	"neutral-700": #f1f1f1,
+	"neutral-white": #fff,
+	"white": #fff,
+	"off-white": #f1f1f1,
+	"brand-green": var(--wp--preset--color--accent),
+	"brand-green-dark": var(--wp--preset--color--accent-2),
+	"brand-dark": var(--wp--preset--color--contrast),
+	"brand-light": var(--wp--preset--color--base-2),
+	"star": var(--wp--preset--color--accent-3),
+	"red": #ef4444,
+	"red-100": #991b1b,
+	"red-300": #b91c1c,
+	"red-500": #ef4444,
+	"red-700": #f87171,
+	"red-900": #fee2e2,
+	"green-100": #105023,
+	"green-300": #288141,
+	"green-500": #42be65,
+	"green-700": #ccf5d7,
+	"green-900": #e5faeb,
+	"orange-500": #f59e0b,
+);
+
+$token-colors: (
+	"base": var(--color--white),
+	"accent": var(--color--brand-green),
+	"accent-hover": var(--color--brand-green-dark),
+	"accent-darker": var(--color--brand-dark),
+	"primary": var(--color--ink),
+	"darkest": var(--color--neutral-100),
+	"darker": var(--color--neutral-200),
+	"dark": var(--color--neutral-300),
+	"medium": var(--color--neutral-500),
+	"light": var(--color--neutral-700),
+	"error": var(--color--red-500),
+	"warning": var(--color--orange-500),
+	"success": var(--color--green-500),
+	"info": var(--color--brand-dark),
+	"background-alt": var(--color--brand-light),
+);
+
+$radii: (
+	"base": 3px,
+	"button": 0,
+	"pill": 999px,
+);
+
+$spacings-desktop: (
+	"2xl": rem(64),
+	"xl": rem(48),
+	"lg": rem(36),
+	"md": rem(24),
+	"sm": rem(12),
+	"xs": rem(8),
+	"none": 0,
+);
+
+$spacings-mobile: (
+	"2xl": rem(48),
+	"xl": rem(36),
+	"lg": rem(24),
+	"md": rem(16),
+	"sm": rem(8),
+	"xs": rem(4),
+	"none": 0,
+);
+
+// Archivo is registered (and self-hosted) via theme.json fontFace.
+$fonts: (
+	"sans": var(--wp--preset--font-family--body),
+	"serif": var(--wp--preset--font-family--body),
+	"display": var(--wp--preset--font-family--body),
+);
+
+$font-sizes: (
+	"xs": rem(12),
+	"s": rem(14),
+	"m": rem(16),
+	"l": rem(18),
+	"xl": rem(24),
+	"2xl": rem(32),
+	"3xl": rem(36),
+	"4xl": rem(48),
+	"5xl": rem(64),
+);
+
+$font-weights: (
+	"regular": 400,
+	"medium": 500,
+	"semibold": 600,
+	"bold": 700,
+	"extrabold": 800,
+	"black": 900,
+);
+
+$line-heights: (
+	"none": 1,
+	"xs": 1.1,
+	"s": 1.2,
+	"m": 1.4,
+	"l": 1.6,
+	"xl": 1.8,
+	"2xl": 2,
+);
+
+$letter-spacings: (
+	"none": 0,
+	"2xs": -0.02em,
+	"xs": -0.01em,
+	"s": 0.02em,
+	"m": 0.04em,
+	"l": 0.08em,
+);
+
+
+:root {
+
+	/*
+	 * COLORS
+	 * Contains variables referenced from theme.json.
+	 */
+
+	// All colors
+	@each $name, $color in $colors {
+		--color--#{$name}: #{$color};
+	}
+
+	// Token colors
+	@each $name, $color in $token-colors {
+		--color--#{$name}: #{$color};
+	}
+
+	/*
+	 * RADII
+	 * Brand: square buttons, 3px on the filled header CTA.
+	 */
+
+	@each $name, $radius in $radii {
+		--radius--#{$name}: #{$radius};
+	}
+
+	/*
+	 * TYPOGRAPHY
+	 * Contains variables referenced from theme.json.
+	 */
+
+	// Font Families
+	@each $name, $font in $fonts {
+		--font-family--#{$name}: #{$font};
+	}
+
+	--font-family--primary: var(--font-family--sans);
+	--font-family--secondary: var(--font-family--display);
+	--font-family--body: var(--font-family--sans);
+	--font-family--heading: var(--font-family--display);
+	--font-family--headline: var(--font-family--display);
+	--font-family--blockquote: var(--font-family--serif);
+	--font-family--detail--sans: var(--font-family--sans);
+	--font-family--detail--serif: var(--font-family--serif);
+	--font-family--ui: var(--font-family--sans);
+	--font-family--button: var(--font-family--primary);
+
+	// Fixed Font Sizes
+	@each $name, $font in $font-sizes {
+		--font-size--#{$name}: #{$font};
+	}
+
+	// Font Weights
+	@each $name, $weight in $font-weights {
+		--font-weight--#{$name}: #{$weight};
+	}
+
+	/*
+	 * Fluid font-sizes
+	 * font-size:
+	 *   clamp(var(--font-size--3xl),
+	 *   1vw + 1rem,
+	 *   var(--font-size--4xl));
+	 *
+	 * Calculate a Fluid Typography Scale
+	 * https://royalfig.github.io/fluid-typography-calculator/
+	 * In this case, the Max Viewport is set to 800px
+	 * (the value of --layout--content-size)
+	 * Min Viewport: 320px
+	 * Max Viewport: --layout--content-size (800px)
+	 */
+	--f-font-size--xs: var(--font-size--xs);
+	--f-font-size--s: clamp(var(--font-size--xs), 0.6667rem + 0.4167vw, var(--font-size--s));
+	--f-font-size--m: clamp(var(--font-size--s), 0.7917rem + 0.4167vw, var(--font-size--m));
+	--f-font-size--l: clamp(var(--font-size--m), 0.9166rem + 0.4167vw, var(--font-size--l));
+	--f-font-size--xl: clamp(var(--font-size--l), 0.875rem + 1.25vw, var(--font-size--xl));
+	--f-font-size--2xl: clamp(var(--font-size--xl), 1.1667rem + 1.6667vw, var(--font-size--2xl));
+	--f-font-size--3xl: clamp(var(--font-size--2xl), 1.8333rem + 0.8334vw, var(--font-size--3xl));
+	--f-font-size--4xl: clamp(var(--font-size--3xl), 1.75rem + 2.5vw, var(--font-size--4xl));
+	--f-font-size--5xl: clamp(var(--font-size--4xl), 2.3333rem + 3.3333vw, var(--font-size--5xl));
+}

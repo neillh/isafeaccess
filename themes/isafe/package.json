@@ -1,0 +1,92 @@
+{
+	"name": "@neillh/mavero",
+	"private": true,
+	"description": "Mavero WordPress theme.",
+	"author": "Mavero Digital",
+	"version": "1.0.0",
+	"contributors": [
+		{
+			"name": "Neill Horsman",
+			"email": "info@maverodigital.com.au"
+		}
+	],
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"WordPress",
+		"Theme"
+	],
+	"engines": {
+		"node": ">=16.0.0"
+	},
+	"homepage": "https://github.com/neillh/mavero#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neillh/mavero.git"
+	},
+	"bugs": {
+		"url": "https://github.com/neillh/mavero/issues"
+	},
+	"devDependencies": {
+		"@10up/block-components": "^1.22.1",
+		"@babel/core": "^7.29.0",
+		"@babel/plugin-proposal-class-properties": "^7.18.6",
+		"@babel/plugin-proposal-decorators": "^7.29.0",
+		"@babel/preset-env": "^7.29.0",
+		"@tailwindcss/postcss": "^4.2.1",
+		"@typescript-eslint/eslint-plugin": "^8.57.0",
+		"@typescript-eslint/parser": "8.57.0",
+		"@wordpress/eslint-plugin": "24.2.0",
+		"@wordpress/icons": "11.7.0",
+		"@wordpress/stylelint-config": "23.32.0",
+		"ajv": "^8.18.0",
+		"ajv-errors": "^3.0.0",
+		"classnames": "2.5.1",
+		"css-loader": "^7.1.4",
+		"dir-archiver": "3.0.0",
+		"eslint-plugin-react-hooks": "7.0.1",
+		"glob": "^13.0.6",
+		"lint-staged": "16.3.0",
+		"lodash": "^4.17.23",
+		"npm-run-all": "4.1.5",
+		"postcss-loader": "^8.2.1",
+		"postcss-preset-env": "11.2.0",
+		"requestidlecallback-polyfill": "1.0.2",
+		"sass": "1.76.0",
+		"sass-loader": "14.2.1",
+		"style-loader": "^4.0.0",
+		"stylelint": "^16.12.0",
+		"stylelint-use-logical": "2.1.3",
+		"tailwindcss": "^4.2.1",
+		"uuid": "^13.0.0",
+		"webpack-remove-empty-scripts": "^1.1.1",
+		"webpackbar": "7.0.0",
+		"whatwg-fetch": "3.6.20"
+	},
+	"scripts": {
+		"dev": "wp-scripts start --experimental-modules",
+		"build": "npm-run-all --parallel build:*",
+		"build:assets": "wp-scripts build --experimental-modules",
+		"lint": "npm-run-all --parallel lint:*",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js --ext .jsx,.js,.mjs",
+		"format": "npm-run-all --parallel format:*",
+		"format:css": "npm run lint:css -- --fix",
+		"format:js": "npm run lint:js -- --fix"
+	},
+	"dependencies": {
+		"@wordpress/scripts": "^27.9.0",
+		"plop": "4.0.5",
+		"react-select": "^5.10.2",
+		"swiper": "^12.1.2",
+		"use-debounce": "^10.1.0"
+	},
+	"lint-staged": {
+		"*.{css,sass,scss}": [
+			"npm run format:css",
+			"npm run lint:css"
+		],
+		"*.{js,jsx,mjs}": [
+			"npm run lint:js"
+		]
+	}
+}

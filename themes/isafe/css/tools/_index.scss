@@ -1,0 +1,15 @@
+/**
+ * Tools that *must not* produce any CSS output.
+ *
+ * This stylesheet should contain:
+ * - SCSS mixins
+ * - SCSS functions
+ * - SCSS variables (but not CSS custom properties as they are outputted)
+ */
+
+@import "functions";
+@import "elevations";
+@import "transitions"; // Before mixins — button-swipe uses its easing variables.
+@import "mixins";
+@import "typography";
+@import "z-indices";

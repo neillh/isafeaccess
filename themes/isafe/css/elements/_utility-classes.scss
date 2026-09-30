@@ -1,0 +1,141 @@
+@use "sass:map";
+
+@each $name, $color in $colors {
+	.text-#{$name} {
+		color: #{$color};
+	}
+
+	.bg-#{$name} {
+		background-color: #{$color};
+	}
+
+	.border-#{$name} {
+		border-color: #{$color};
+	}
+}
+
+@each $name, $color in $token-colors {
+
+	$css-color-variable: var(--color--#{$name});
+
+	.text-#{$name} {
+		// Important is added to ensure
+		// utility classes override any other styles.
+		// stylelint-disable-next-line declaration-no-important
+		color: #{$css-color-variable} !important;
+	}
+
+	.bg-#{$name} {
+		background-color: #{$css-color-variable};
+	}
+
+	.border-#{$name} {
+		border-color: #{$css-color-variable};
+	}
+}
+
+@each $name, $size in $font-sizes {
+	.text-#{$name} {
+		font-size: #{$size};
+	}
+}
+
+$padding-margin: (
+	"p": "padding",
+	"m": "margin",
+	"gap": "gap"
+);
+
+@each $class, $rule in $padding-margin {
+
+	@each $size, $_ in $spacings-desktop {
+		.#{$class}-#{$size} {
+			#{$rule}: #{map.get($spacings-mobile, $size)};
+
+			@include break-tablet {
+				#{$rule}: #{map.get($spacings-desktop, $size)};
+			}
+		}
+
+		.#{$class}t-#{$size} {
+			#{$rule}-top: #{map.get($spacings-mobile, $size)};
+
+			@include break-tablet {
+				#{$rule}-top: #{map.get($spacings-desktop, $size)};
+			}
+		}
+
+		.#{$class}r-#{$size} {
+			#{$rule}-right: #{map.get($spacings-mobile, $size)};
+
+			@include break-tablet {
+				#{$rule}-right: #{map.get($spacings-desktop, $size)};
+			}
+		}
+
+		.#{$class}b-#{$size} {
+			#{$rule}-bottom: #{map.get($spacings-mobile, $size)};
+
+			@include break-tablet {
+				#{$rule}-bottom: #{map.get($spacings-desktop, $size)};
+			}
+		}
+
+		.#{$class}l-#{$size} {
+			#{$rule}-left: #{map.get($spacings-mobile, $size)};
+
+			@include break-tablet {
+				#{$rule}-left: #{map.get($spacings-desktop, $size)};
+			}
+		}
+	}
+}
+
+.rounded-full {
+	border-radius: 50%;
+}
+
+.visually-hidden:not(:focus):not(:active) {
+
+	@include visually-hidden;
+}
+
+html :where(.has-border-color) {
+    border-style: solid
+}
+
+html :where([style*=border-top-color]) {
+    border-top-style: solid
+}
+
+html :where([style*=border-right-color]) {
+    border-right-style: solid
+}
+
+html :where([style*=border-bottom-color]) {
+    border-bottom-style: solid
+}
+
+html :where([style*=border-left-color]) {
+    border-left-style: solid
+}
+
+html :where([style*=border-width]) {
+    border-style: solid
+}
+
+html :where([style*=border-top-width]) {
+    border-top-style: solid
+}
+
+html :where([style*=border-right-width]) {
+    border-right-style: solid
+}
+
+html :where([style*=border-bottom-width]) {
+    border-bottom-style: solid
+}
+
+html :where([style*=border-left-width]) {
+    border-left-style: solid;
+}

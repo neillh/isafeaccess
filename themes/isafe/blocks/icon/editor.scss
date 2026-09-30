@@ -1,0 +1,56 @@
+.component-icon-picker__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+
+	.component-icon-picker__checkbox-control {
+		margin-block-end: 0;
+	}
+
+	.components-checkbox-control__input,
+	.components-checkbox-control__input-container {
+		display: none;
+	}
+
+	.icon {
+		background-color: #fff;
+		color: #000;
+		fill: #000;
+		padding: 5px;
+		border: none;
+		border-radius: 4px;
+		height: 34px;
+		width: 34px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&:hover {
+			background-color: #f3f4f5;
+		}
+
+		svg {
+			max-height: 100%;
+			max-width: 100%;
+			height: auto;
+			width: auto;
+			object-fit: contain;
+		}
+	}
+
+	.icon--active {
+		background-color: #bbb;
+		color: #fff;
+		fill: #fff;
+
+		&:hover {
+			background-color: #555d66;
+		}
+	}
+}
+
+.xwp-co-blocks-icons__custom-range-control {
+	margin-block-start: 15px;
+}

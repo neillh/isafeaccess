@@ -1,0 +1,11 @@
+.wp-block-mavero-brand-carousel {
+	// Ensure the ServerSideRender preview fills the block.
+	> div {
+		width: 100%;
+	}
+
+	// Disable link navigation inside the editor preview.
+	a {
+		pointer-events: none;
+	}
+}

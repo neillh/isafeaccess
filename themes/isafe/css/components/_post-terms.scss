@@ -1,0 +1,10 @@
+// Migrated from theme.json styles.blocks.core/post-terms
+
+.wp-block-post-terms {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+
+	a {
+		white-space: nowrap;
+	}
+}

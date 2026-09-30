@@ -1,0 +1,49 @@
+// stylelint-disable max-line-length
+// This variable is repeated across Button, Buttons, and Buttons editor styles.
+
+.wp-block-xwp-co-buttons {
+	// Override editor auto block margins for button as well as the block appender.
+	> .wp-block {
+		margin: 0;
+	}
+
+	// Specificity needed in some themes to override editor auto block margins for the button.
+	> .wp-block-xwp-co-button.wp-block-xwp-co-button.wp-block-xwp-co-button.wp-block-xwp-co-button.wp-block-xwp-co-button {
+		margin: 0;
+	}
+
+	> .block-list-appender {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	&.is-vertical {
+
+		> .block-list-appender .block-list-appender__toggle {
+			justify-content: flex-start;
+		}
+	}
+
+	> .wp-block-xwp-co-button {
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.editor-styles-wrapper &.has-custom-font-size {
+
+		.wp-block-xwp-co-button__link {
+			font-size: inherit;
+		}
+	}
+}
+
+.wp-block[data-align="center"] > .wp-block-xwp-co-buttons {
+	align-items: center;
+	justify-content: center;
+}
+
+.wp-block[data-align="right"] > .wp-block-xwp-co-buttons {
+	justify-content: flex-end;
+}

@@ -1,0 +1,81 @@
+/**
+ * Layout with CSS grid.
+ * Use on templates without a sidebar.
+ * Adds support for wide & full alignment elements.
+ *
+ * https://xwp.atlassian.net/wiki/spaces/KB/pages/2751496193/Layout#Full-bleed-layout
+ * https://ryanmulligan.dev/blog/layout-breakouts/
+ *
+ * <div class="block-container">
+ * 	<div class="alignwide">alignwide</div>
+ *	<div class="alignfull">alignfull</div>
+ * </div><!-- .block-container -->
+ */
+
+.block-container {
+
+	--gap: var(--layout--grid--gutter);
+	--block-container--gap: var(--layout--block-gap);
+	--alignfull: 1fr;
+	--alignwide-width: calc((var(--layout--wide-size) - var(--layout--content-size)) / 2);
+	--alignwide: minmax(0, var(--alignwide-width));
+	--content: min(var(--layout--content-size), 100%);
+	display: grid;
+	grid-template-columns:
+		[alignfull-start] var(--alignfull)
+		[alignwide-start] var(--alignwide)
+		[content-start] var(--content) [content-end]
+		var(--alignwide) [alignwide-end]
+		var(--alignfull) [alignfull-end];
+}
+
+.block-container > * {
+	grid-column: content;
+
+	// In a grid context, margins do not collapse.
+	margin-block-start: 0;
+}
+
+.block-container > .alignwide {
+	grid-column: alignwide;
+}
+
+.block-container > .alignfull {
+	grid-column: alignfull;
+}
+
+.block-container > .alignleft {
+	margin-inline: auto;
+
+	@include break-desktop() {
+		grid-column: alignfull;
+		margin-inline-start: var(--block-container--gap);
+		justify-self: start;
+	}
+}
+
+.block-container > .alignright {
+	margin-inline: auto;
+
+	@include break-desktop() {
+		grid-column: alignfull;
+		margin-inline-end: var(--block-container--gap);
+		justify-self: end;
+	}
+}
+
+.block-container > .aligncenter {
+	margin-inline: auto;
+}
+
+/*
+ * :where lowers the specificity of the wrapped selectors to 0.
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/:where
+*/
+.block-container > *:where(div, article, form, section) {
+	margin-block-end: var(--block-container--gap);
+}
+
+.block-container > *:last-child:not(:first-child) {
+	margin-block-end: var(--block-container--gap);
+}

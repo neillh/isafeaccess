@@ -1,0 +1,55 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 3,
+	"version": "1.0.0",
+	"name": "mavero/testimonial-carousel",
+	"title": "Testimonial Carousel",
+	"category": "mavero-blocks",
+	"icon": "format-quote",
+	"description": "Client testimonials from the Testimonials post type, shown in a looping slider.",
+	"keywords": ["testimonial", "review", "carousel", "slider", "quote"],
+	"textdomain": "mavero",
+	"supports": {
+		"customClassName": true,
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"],
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"attributes": {
+		"count": {
+			"type": "integer",
+			"default": 12
+		},
+		"order": {
+			"type": "string",
+			"enum": ["menu_order", "date_desc", "date_asc"],
+			"default": "menu_order"
+		},
+		"showRating": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPhoto": {
+			"type": "boolean",
+			"default": true
+		},
+		"showLogo": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"editorScript": "file:./editor.js",
+	"style": "file:./script.css",
+	"render": "file:./template.php"
+}

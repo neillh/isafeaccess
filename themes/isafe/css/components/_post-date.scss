@@ -1,0 +1,15 @@
+// Migrated from theme.json styles.blocks.core/post-date
+
+.wp-block-post-date {
+	color: var(--wp--preset--color--accent-4);
+	font-size: var(--wp--preset--font-size--small);
+
+	a:where(:not(.wp-element-button)) {
+		color: var(--wp--preset--color--accent-4);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
