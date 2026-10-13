@@ -28,15 +28,15 @@
 
 # --- Node & build tooling ---
 node_modules/
-/themes/sfa/package.json
-/themes/sfa/package-lock.json
-/themes/sfa/webpack.config.js
+/themes/isafe/package.json
+/themes/isafe/package-lock.json
+/themes/isafe/webpack.config.js
 
 # --- Every dotfile at the theme root in one rule
 #     (.nvmrc .eslintrc .eslintrc.json .eslintignore .prettierrc .prettierrc.json
 #      .prettierignore .stylelintrc.json .stylelintignore .browserslistrc
 #      .sass-lint.yml .gitignore .DS_Store ...) ---
-/themes/sfa/.*
+/themes/isafe/.*
 
 # --- Composer manifests: the server never runs composer ---
 /composer.json

@@ -1,0 +1,119 @@
+name: Deploy wp-content
+
+# Builds the theme and Composer dependencies, then rsyncs the result to cPanel.
+#
+# The deploy is strictly ADDITIVE: there is deliberately no --delete flag
+# anywhere, so nothing on the server is ever removed. uploads/ is additionally
+# excluded in .deployignore so rsync never even walks it.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (list changes, transfer nothing)'
+        type: boolean
+        default: true
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  DEPLOY_PATH: /home/betterleads/superfinancialadvice.com.au/wp-content
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4' # matches config.platform.php in composer.json
+          tools: composer:v2
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      # vendor-dir is plugins/vendor, and mu-plugins/config.php requires
+      # plugins/vendor/autoload.php on every request - so this is not optional.
+      - name: Install Composer dependencies
+        run: composer install --no-dev --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: themes/isafe/.nvmrc
+          cache: npm
+          cache-dependency-path: themes/isafe/package-lock.json
+
+      # themes/isafe/build/ is gitignored, so CI has to produce it.
+      - name: Build theme
+        working-directory: themes/isafe
+        run: |
+          npm ci
+          npm run build
+
+      - name: Verify build artefacts exist
+        run: |
+          test -d themes/isafe/build \
+            || { echo "::error::themes/isafe/build/ missing - theme build produced nothing"; exit 1; }
+          test -f plugins/vendor/autoload.php \
+            || { echo "::error::plugins/vendor/autoload.php missing - site would fatal"; exit 1; }
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          # -rltvz rather than -a: deliberately drops -p/-o/-g, since preserving
+          # permissions and ownership fails on shared cPanel hosting.
+          #
+          # --chmod needs rsync 3.x. ubuntu-latest has it; stock macOS ships
+          # openrsync (2.6.9-compatible) which rejects the flag, so drop --chmod
+          # when reproducing this command locally, or `brew install rsync`.
+          FLAGS=(
+            -rltvz
+            --human-readable
+            --no-perms --no-owner --no-group --omit-dir-times
+            --chmod=D755,F644
+            --exclude-from=.deployignore
+          )
+
+          # If the host cannot install rsync system-wide, upload a static binary
+          # to ~/bin/rsync on the server and uncomment the next line:
+          # FLAGS+=(--rsync-path=/home/betterleads/bin/rsync)
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "::notice::DRY RUN - listing changes only, nothing will be written"
+            FLAGS+=(--dry-run)
+          fi
+
+          rsync "${FLAGS[@]}" \
+            -e "ssh -i ~/.ssh/deploy_key -p ${SSH_PORT} -o StrictHostKeyChecking=yes" \
+            ./ "${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}/"
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key ~/.ssh/known_hosts
