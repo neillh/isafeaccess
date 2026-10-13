@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DEPLOY_PATH: /home/betterleads/superfinancialadvice.com.au/wp-content
+  DEPLOY_PATH: /home/betterleads/isafeaccess.com.au/wp-content
 
 jobs:
   deploy:
