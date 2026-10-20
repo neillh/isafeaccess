@@ -8,12 +8,20 @@
 namespace Mavero\Components\Post_Types;
 
 use Mavero\Components\Component;
+use Mavero\Components\Taxonomies\Team_Group;
 use Yoast\WP\SEO\Generators\Schema\Abstract_Schema_Piece;
 
 /**
  * Team Post Type.
  */
 class Team implements Component {
+
+	/**
+	 * Post type key.
+	 *
+	 * @var string
+	 */
+	const POST_TYPE = 'team';
 
 	/**
 	 * Position meta key (e.g. "Director").
@@ -72,16 +80,26 @@ class Team implements Component {
 	 */
 	public function register_post_type(): void {
 		$admin_cols    = [
-			'date' => [
+			'team_group' => [
+				'taxonomy' => Team_Group::TAXONOMY,
+			],
+			'date'       => [
 				'title'   => __( 'Date', 'mavero' ),
 				'default' => 'DESC',
 			],
 		];
 		$admin_cols    = apply_filters( 'mavero_admin_column_team', $admin_cols );
-		$admin_filters = apply_filters( 'mavero_admin_filter_team', [] );
+		$admin_filters = apply_filters(
+			'mavero_admin_filter_team',
+			[
+				'team_group' => [
+					'taxonomy' => Team_Group::TAXONOMY,
+				],
+			]
+		);
 
 		register_extended_post_type(
-			'team',
+			self::POST_TYPE,
 			[
 				'admin_filters' => $admin_filters,
 				'admin_cols'    => $admin_cols,

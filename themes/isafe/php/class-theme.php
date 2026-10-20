@@ -52,6 +52,7 @@ class Theme {
 			Components\Post_Types\Team::class,
 			Components\Post_Types\Project::class,
 			Components\Taxonomies\Industry::class,
+			Components\Taxonomies\Team_Group::class,
 		];
 
 		$instances = [];
