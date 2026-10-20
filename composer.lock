@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "492debe4c95c823b002ea4448254890c",
+    "content-hash": "3ef5b81e176c2a6840d53a466db2387d",
     "packages": [
         {
             "name": "composer/installers",
@@ -587,15 +587,15 @@
         },
         {
             "name": "wpackagist-plugin/google-site-kit",
-            "version": "1.189.0",
+            "version": "1.190.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/google-site-kit/",
-                "reference": "tags/1.189.0"
+                "reference": "tags/1.190.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-site-kit.1.189.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/google-site-kit.1.190.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -623,15 +623,15 @@
         },
         {
             "name": "wpackagist-plugin/microsoft-clarity",
-            "version": "0.10.35",
+            "version": "0.10.36",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/microsoft-clarity/",
-                "reference": "tags/0.10.35"
+                "reference": "tags/0.10.36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/microsoft-clarity.0.10.35.zip"
+                "url": "https://downloads.wordpress.org/plugin/microsoft-clarity.0.10.36.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -677,15 +677,15 @@
         },
         {
             "name": "wpackagist-plugin/simple-history",
-            "version": "5.35.0",
+            "version": "5.36.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/simple-history/",
-                "reference": "tags/5.35.0"
+                "reference": "tags/5.36.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/simple-history.5.35.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/simple-history.5.36.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -695,15 +695,15 @@
         },
         {
             "name": "wpackagist-plugin/twentig",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/twentig/",
-                "reference": "tags/2.0.5"
+                "reference": "tags/2.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/twentig.2.0.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/twentig.2.0.6.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -749,15 +749,15 @@
         },
         {
             "name": "wpackagist-plugin/woocommerce-services",
-            "version": "3.7.2",
+            "version": "3.7.3",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/woocommerce-services/",
-                "reference": "tags/3.7.2"
+                "reference": "tags/3.7.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/woocommerce-services.3.7.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/woocommerce-services.3.7.3.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -767,15 +767,15 @@
         },
         {
             "name": "wpackagist-plugin/wordpress-seo",
-            "version": "28.6",
+            "version": "28.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/28.6"
+                "reference": "tags/28.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.28.6.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.28.7.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"

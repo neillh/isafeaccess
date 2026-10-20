@@ -49,6 +49,7 @@ class Theme {
 			Components\Custom_Login::class,
 			Components\Security::class,
 			Components\Post_Types\Testimonial::class,
+			Components\Post_Types\Team::class,
 			Components\Post_Types\Project::class,
 			Components\Taxonomies\Industry::class,
 		];

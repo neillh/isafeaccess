@@ -21,16 +21,16 @@
 	"require": {
 		"composer/installers": "^2.0",
 		"johnbillion/extended-cpts": "^5.0",
-		"wpackagist-plugin/google-site-kit": "^1.188.0",
-		"wpackagist-plugin/twentig": "^2.0.5",
+		"wpackagist-plugin/google-site-kit": "^1.190.0",
+		"wpackagist-plugin/twentig": "^2.0.6",
 		"wpackagist-plugin/jetpack": "^16.3.1",
-		"wpackagist-plugin/wordpress-seo": "^28.5",
-		"wpackagist-plugin/simple-history": "^5.34.0",
+		"wpackagist-plugin/wordpress-seo": "^28.6",
+		"wpackagist-plugin/simple-history": "^5.36.0",
 		"wpackagist-plugin/simple-cloudflare-turnstile": "^1.44.0",
-		"wpackagist-plugin/microsoft-clarity": "^0.10.35",
+		"wpackagist-plugin/microsoft-clarity": "^0.10.36",
 		"wpackagist-plugin/reusable-blocks-extended": "^0.9.1",
-		"wpackagist-plugin/woocommerce": "^11.0.1",
-		"wpackagist-plugin/woocommerce-services": "^3.6.2",
+		"wpackagist-plugin/woocommerce": "^11.2.1",
+		"wpackagist-plugin/woocommerce-services": "^3.7.3",
 		"wpackagist-plugin/woocommerce-payments": "^11.0.0"
 	},
 	"require-dev": {

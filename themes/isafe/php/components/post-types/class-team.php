@@ -16,12 +16,45 @@ use Yoast\WP\SEO\Generators\Schema\Abstract_Schema_Piece;
 class Team implements Component {
 
 	/**
+	 * Position meta key (e.g. "Director").
+	 *
+	 * Edited in the Team Member sidebar panel (js/modules/_team-member-meta.js)
+	 * and displayed by the "Team Position" paragraph variation.
+	 *
+	 * @var string
+	 */
+	const META_POSITION = 'team_position';
+
+	/**
+	 * LinkedIn profile URL meta key. Output as Person `sameAs`.
+	 *
+	 * @var string
+	 */
+	const META_LINKEDIN = 'team_linkedin';
+
+	/**
+	 * Credentials meta key: list of { name, issuer }. Output as Person `hasCredential`.
+	 *
+	 * @var string
+	 */
+	const META_CREDENTIALS = 'team_credentials';
+
+	/**
+	 * Areas of expertise meta key: list of strings. Output as Person `knowsAbout`.
+	 *
+	 * @var string
+	 */
+	const META_KNOWS_ABOUT = 'team_knows_about';
+
+	/**
 	 * Adds the action and filter hooks to integrate with WordPress.
 	 *
 	 * @return void
 	 */
 	public function init(): void {
 		add_action( 'init', [ $this, 'register_post_type' ] );
+		add_action( 'init', [ $this, 'register_meta' ] );
+		add_filter( 'get_block_type_variations', [ $this, 'register_position_variation' ], 10, 2 );
 		add_filter( 'manage_team_posts_columns', [ $this, 'add_thumbnail_column' ] );
 		add_action( 'manage_team_posts_custom_column', [ $this, 'render_thumbnail_column' ], 10, 2 );
 		add_action( 'admin_head', [ $this, 'column_styles' ] );
@@ -66,6 +99,170 @@ class Team implements Component {
 			'team',
 			[ 'custom-fields', 'thumbnail', 'title', 'editor' ],
 		);
+	}
+
+	/**
+	 * Register Team Member meta, exposed to REST for the editor and block bindings.
+	 *
+	 * @return void
+	 */
+	public function register_meta(): void {
+		$auth_callback = function ( $allowed, $meta_key, $post_id ) {
+			return current_user_can( 'edit_post', $post_id );
+		};
+
+		register_post_meta(
+			'team',
+			self::META_POSITION,
+			[
+				'label'             => __( 'Position', 'mavero' ),
+				'type'              => 'string',
+				'single'            => true,
+				'default'           => '',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'auth_callback'     => $auth_callback,
+			]
+		);
+
+		register_post_meta(
+			'team',
+			self::META_LINKEDIN,
+			[
+				'label'             => __( 'LinkedIn URL', 'mavero' ),
+				'type'              => 'string',
+				'single'            => true,
+				'default'           => '',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'esc_url_raw',
+				'auth_callback'     => $auth_callback,
+			]
+		);
+
+		register_post_meta(
+			'team',
+			self::META_CREDENTIALS,
+			[
+				'label'             => __( 'Credentials', 'mavero' ),
+				'type'              => 'array',
+				'single'            => true,
+				'default'           => [],
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type'                 => 'object',
+							'additionalProperties' => false,
+							'properties'           => [
+								'name'   => [ 'type' => 'string' ],
+								'issuer' => [ 'type' => 'string' ],
+							],
+						],
+					],
+				],
+				'sanitize_callback' => [ $this, 'sanitize_credentials' ],
+				'auth_callback'     => $auth_callback,
+			]
+		);
+
+		register_post_meta(
+			'team',
+			self::META_KNOWS_ABOUT,
+			[
+				'label'             => __( 'Areas of expertise', 'mavero' ),
+				'type'              => 'array',
+				'single'            => true,
+				'default'           => [],
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [ 'type' => 'string' ],
+					],
+				],
+				'sanitize_callback' => [ $this, 'sanitize_knows_about' ],
+				'auth_callback'     => $auth_callback,
+			]
+		);
+	}
+
+	/**
+	 * Sanitize credentials, dropping rows without a name.
+	 *
+	 * @param mixed $value Raw meta value.
+	 *
+	 * @return array List of [ 'name' => string, 'issuer' => string ].
+	 */
+	public function sanitize_credentials( $value ): array {
+		$credentials = [];
+
+		foreach ( (array) $value as $row ) {
+			$name = sanitize_text_field( $row['name'] ?? '' );
+
+			if ( '' === $name ) {
+				continue;
+			}
+
+			$credentials[] = [
+				'name'   => $name,
+				'issuer' => sanitize_text_field( $row['issuer'] ?? '' ),
+			];
+		}
+
+		return $credentials;
+	}
+
+	/**
+	 * Sanitize areas of expertise, dropping empty and duplicate entries.
+	 *
+	 * @param mixed $value Raw meta value.
+	 *
+	 * @return string[]
+	 */
+	public function sanitize_knows_about( $value ): array {
+		$topics = array_map( 'sanitize_text_field', array_filter( (array) $value, 'is_string' ) );
+
+		return array_values( array_unique( array_filter( $topics ) ) );
+	}
+
+	/**
+	 * Add a "Team Position" variation of core/paragraph bound to the position meta.
+	 *
+	 * Being a paragraph, it keeps all the core paragraph styling controls.
+	 *
+	 * @param array          $variations Registered variations.
+	 * @param \WP_Block_Type $block_type Block type.
+	 *
+	 * @return array
+	 */
+	public function register_position_variation( $variations, $block_type ): array {
+		if ( 'core/paragraph' !== $block_type->name ) {
+			return $variations;
+		}
+
+		$variations[] = [
+			'name'        => 'team-position',
+			'title'       => __( 'Team Position', 'mavero' ),
+			'description' => __( 'Displays the team member\'s position.', 'mavero' ),
+			'category'    => 'mavero-blocks',
+			'icon'        => 'id',
+			'keywords'    => [ 'team', 'position', 'job title', 'role' ],
+			'scope'       => [ 'inserter', 'transform' ],
+			'attributes'  => [
+				'placeholder' => __( 'Position', 'mavero' ),
+				'metadata'    => [
+					'name'     => __( 'Team Position', 'mavero' ),
+					'bindings' => [
+						'content' => [
+							'source' => 'core/post-meta',
+							'args'   => [ 'key' => self::META_POSITION ],
+						],
+					],
+				],
+			],
+			'isActive'    => [ 'metadata.bindings.content.args.key' ],
+		];
+
+		return $variations;
 	}
 
     /**
@@ -152,80 +349,78 @@ class Team implements Component {
 			return $graph;
 		}
 
-		if ( ! function_exists( 'get_field' ) ) {
-			return $graph; // ACF not available.
-		}
+		$post      = $context->post;
+		$permalink = get_permalink( $post );
+		$person_id = $permalink . '#person';
 
-		$post = $context->post;
-
-		$person_id = get_permalink( $post ) . '#person';
-
-		// ACF fields from "The Team" group on this Team CPT.
-		$job_title = get_field( 'job_title', $post->ID );
-		$email     = get_field( 'email', $post->ID );
-		$phone     = get_field( 'phone', $post->ID );
-		$same_as   = get_field( 'sameAs', $post->ID );
-
-		// Collect sameAs URLs from ACF (group or repeater of { site, url }).
-		$same_as_urls = [];
-
-		if ( is_array( $same_as ) ) {
-			// Repeater: array of rows with 'site' and 'url'.
-			if ( isset( $same_as[0] ) && is_array( $same_as[0] ) ) {
-				foreach ( $same_as as $row ) {
-					if ( ! empty( $row['url'] ) ) {
-						$same_as_urls[] = esc_url_raw( $row['url'] );
-					}
-				}
-			}
-			// Group: single array with 'site' and 'url'.
-			elseif ( isset( $same_as['url'] ) ) {
-				$same_as_urls[] = esc_url_raw( $same_as['url'] );
-			}
-		}
-
-		// Featured image URL for Person image.
-		$image_url = get_the_post_thumbnail_url( $post, 'full' );
-
-		// Build the Person node.
 		$person = [
 			'@type' => 'Person',
 			'@id'   => $person_id,
 			'name'  => get_the_title( $post ),
+			'url'   => $permalink,
 		];
 
-		if ( $image_url ) {
+		$position = get_post_meta( $post->ID, self::META_POSITION, true );
+
+		if ( $position ) {
+			$person['jobTitle'] = $position;
+		}
+
+		// Manual excerpt if set, otherwise the start of the bio (without the "[…]" more string).
+		$description = has_excerpt( $post )
+			? wp_strip_all_tags( $post->post_excerpt )
+			: wp_trim_words( excerpt_remove_blocks( strip_shortcodes( $post->post_content ) ), 55, '…' );
+
+		if ( $description ) {
+			$person['description'] = $description;
+		}
+
+		$linkedin = get_post_meta( $post->ID, self::META_LINKEDIN, true );
+
+		if ( $linkedin ) {
+			$person['sameAs'] = [ $linkedin ];
+		}
+
+		$credentials = [];
+
+		foreach ( (array) get_post_meta( $post->ID, self::META_CREDENTIALS, true ) as $row ) {
+			if ( empty( $row['name'] ) ) {
+				continue;
+			}
+
+			$credential = [
+				'@type' => 'EducationalOccupationalCredential',
+				'name'  => $row['name'],
+			];
+
+			if ( ! empty( $row['issuer'] ) ) {
+				$credential['recognizedBy'] = [
+					'@type' => 'Organization',
+					'name'  => $row['issuer'],
+				];
+			}
+
+			$credentials[] = $credential;
+		}
+
+		if ( $credentials ) {
+			$person['hasCredential'] = $credentials;
+		}
+
+		$knows_about = array_values( array_filter( (array) get_post_meta( $post->ID, self::META_KNOWS_ABOUT, true ) ) );
+
+		if ( $knows_about ) {
+			$person['knowsAbout'] = $knows_about;
+		}
+
+		// Yoast outputs the featured image as the page's primary image; reference it.
+		if ( has_post_thumbnail( $post ) && class_exists( '\Yoast\WP\SEO\Config\Schema_IDs' ) ) {
 			$person['image'] = [
-				'@type'  => 'ImageObject',
-				'@id'    => $person_id . '#image',
-				'url'    => $image_url,
-				'caption'=> get_the_title( $post ),
+				'@id' => $context->canonical . \Yoast\WP\SEO\Config\Schema_IDs::PRIMARY_IMAGE_HASH,
 			];
 		}
 
-		if ( $job_title ) {
-			$person['jobTitle'] = $job_title;
-		}
-
-		if ( $email ) {
-			$person['email'] = 'mailto:' . sanitize_email( $email );
-		}
-
-		if ( $phone ) {
-			$person['telephone'] = $phone;
-		}
-
-		// Country-only address (always USA).
-		$person['address'] = [
-			'@type'          => 'PostalAddress',
-			'addressCountry' => 'US',
-		];
-
-		if ( ! empty( $same_as_urls ) ) {
-			$person['sameAs'] = array_values( array_unique( $same_as_urls ) );
-		}
-
-		// Tie the person to the Premium & Exotic Organization node Yoast already outputs.
+		// Tie the person to the Organization node Yoast already outputs.
 		if ( class_exists( '\Yoast\WP\SEO\Config\Schema_IDs' ) && isset( $context->site_url ) ) {
 			$person['worksFor'] = [
 				'@id' => $context->site_url . \Yoast\WP\SEO\Config\Schema_IDs::ORGANIZATION_HASH,
