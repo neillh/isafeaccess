@@ -97,7 +97,7 @@ class Team implements Component {
 
 		add_post_type_support(
 			'team',
-			[ 'custom-fields', 'thumbnail', 'title', 'editor' ],
+			[ 'custom-fields', 'thumbnail', 'title', 'editor', 'excerpt' ],
 		);
 	}
 

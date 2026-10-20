@@ -1,0 +1,47 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 3,
+	"version": "1.0.0",
+	"name": "mavero/team-linkedin",
+	"title": "Team LinkedIn",
+	"category": "mavero-blocks",
+	"icon": "linkedin",
+	"description": "Links to the team member's LinkedIn profile. Hidden when no LinkedIn URL is set.",
+	"keywords": ["team", "linkedin", "social", "profile"],
+	"textdomain": "mavero",
+	"usesContext": ["postId", "postType"],
+	"supports": {
+		"customClassName": true,
+		"html": false,
+		"color": {
+			"text": true,
+			"background": false,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"margin": false
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		}
+	},
+	"attributes": {
+		"openInNewTab": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"editorScript": "file:./editor.js",
+	"style": "file:./script.css",
+	"editorStyle": "file:./editor.css",
+	"render": "file:./template.php"
+}
