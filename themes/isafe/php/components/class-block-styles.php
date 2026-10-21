@@ -100,6 +100,7 @@ class Block_Styles implements Component {
 		add_action( 'init', [ $this, 'action_register_list_styles' ] );
 		add_action( 'init', [ $this, 'action_register_group_styles' ] );
 		add_action( 'init', [ $this, 'action_register_separator_styles' ] );
+		add_filter( 'render_block_core/group', [ $this, 'filter_logo_slider_text' ], 10, 2 );
 	}
 
 	/**
@@ -168,6 +169,45 @@ class Block_Styles implements Component {
 		foreach ( $this->group_styles as $style ) {
 			register_block_style( 'core/group', $style );
 		}
+	}
+
+	/**
+	 * Follow a logo slider with a visually hidden list of its images' alt
+	 * text, so the names exist as real text in the DOM.
+	 *
+	 * The list goes after the track rather than inside it, as
+	 * js/modules/_group-slider.js treats every child of the track as a slide.
+	 *
+	 * @param string $block_content Rendered block markup.
+	 * @param array  $block         Parsed block.
+	 *
+	 * @return string
+	 */
+	public function filter_logo_slider_text( $block_content, $block ) {
+		$class_name = $block['attrs']['className'] ?? '';
+		if ( ! preg_match( '/(^|\s)is-logo-slider(\s|$)/', $class_name ) ) {
+			return $block_content;
+		}
+
+		$names     = [];
+		$processor = new \WP_HTML_Tag_Processor( $block_content );
+		while ( $processor->next_tag( 'img' ) ) {
+			$alt = trim( (string) $processor->get_attribute( 'alt' ) );
+			if ( '' !== $alt ) {
+				$names[ $alt ] = true;
+			}
+		}
+
+		if ( ! $names ) {
+			return $block_content;
+		}
+
+		$items = '';
+		foreach ( array_keys( $names ) as $name ) {
+			$items .= '<li>' . esc_html( $name ) . '</li>';
+		}
+
+		return $block_content . '<ul class="screen-reader-text">' . $items . '</ul>';
 	}
 
 	/**
