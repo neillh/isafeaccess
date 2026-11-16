@@ -11,6 +11,7 @@
 	z-index: 2;
 
 	.wp-block-column {
+		position: relative; // Anchor for the stretched button link below.
 		display: flex;
 		flex-direction: column;
 
@@ -22,6 +23,16 @@
 
 	h2 {
 		min-block-size: 2.2em; // Two lines, so the dividers align across cards.
+	}
+
+	// Whole card is clickable: stretch the button link over the column.
+	// Uses ::before — the outline button's trailing arrow already owns ::after.
+	// "Coming Soon" has no href, so it stays inert.
+	.wp-block-button__link[href]::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
 	}
 }
 
